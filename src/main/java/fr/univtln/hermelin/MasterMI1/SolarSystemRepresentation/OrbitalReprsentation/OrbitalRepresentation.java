@@ -14,7 +14,7 @@ public class OrbitalRepresentation {
 
     public void displayOrbitalRepresentation(){
         if (orbitalRepresentation){
-
+            celestialBodiesList.forEach( ->)
         }
     }
 }
