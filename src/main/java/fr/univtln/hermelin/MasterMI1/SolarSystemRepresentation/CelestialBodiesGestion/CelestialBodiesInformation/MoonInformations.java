@@ -15,6 +15,6 @@ public class MoonInformations extends CelestialBodiesInformation {
             return;
         }
         numberOfMoon++;
-        new MoonInformations("moon", 1f, 1f, "Textures/moon.jpg", 0.0167f, 0, 2 * 3.141592653589793f / 365.25f, 2 * 3.141592653589793f, 0, 5.145f * FastMath.PI / 180);
+        new MoonInformations("moon", 1f, 1f, "Textures/moon.jpg", 0.0167f, 0, 2 * 3.141592653589793f / 365.25f, 2 * 3.141592653589793f, 5, 5.145f * FastMath.PI / 180);
     }
 }

@@ -5,9 +5,13 @@ import com.jme3.asset.AssetManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.util.SkyFactory;
+import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesInformation.CelestialBodiesInformation;
+
+import java.util.Map;
 
 public class NodesCreation {
     private static int NB_UNIVERSE = 0;
+    private Map<String, CelestialBodiesInformation> celestialBodiesList = CelestialBodiesInformation.getCelestialBodiesMap();
 
     //root node of the solar system
     private final Node solarSystemRootNode;
@@ -62,7 +66,7 @@ public class NodesCreation {
                 sunToEarthNode.attachChild(celestialBody);
             }
             case "moon" -> {
-                earthToMoonNode.setLocalTranslation(2,0,0);
+                earthToMoonNode.setLocalTranslation(celestialBodiesList.get("earth").getInitialPosition());
                 earthToMoonNode.attachChild(celestialBody);
             }
             case "mars" -> {

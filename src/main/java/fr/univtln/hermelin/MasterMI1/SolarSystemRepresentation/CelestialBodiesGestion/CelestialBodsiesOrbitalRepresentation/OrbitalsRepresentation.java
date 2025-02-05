@@ -49,7 +49,7 @@ public class OrbitalsRepresentation {
             orbit.setMesh(orbitMesh);
 
             //link the curve to the solar system
-            node.getNode(" ").attachChild(orbit);
+            node.getNode(celestialBody.getName()).attachChild(orbit);
             celestialBody.setEllipticCurve(orbitMesh);
         } else {
             celestialBody.getEllipticCurve().clearBuffer(VertexBuffer.Type.Position);
