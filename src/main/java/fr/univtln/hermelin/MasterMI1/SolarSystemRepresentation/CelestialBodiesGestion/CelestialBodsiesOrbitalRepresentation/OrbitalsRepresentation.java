@@ -21,8 +21,6 @@ public class OrbitalsRepresentation {
 
     private Vector3f[] createPoints(CelestialBodiesInformation celestialBody, int numberOfPoints){
         Vector3f[] points = new Vector3f[numberOfPoints];
-        float a = celestialBody.getSemiMajorAxis();
-        //float b = a* FastMath.sqrt(1 - FastMath.pow(celestialBody.getEccentricity(),2));
 
         for (int i = 0 ; i < numberOfPoints ; i ++){
             float angle = 2 * FastMath.PI * i / (numberOfPoints-1);
@@ -44,7 +42,8 @@ public class OrbitalsRepresentation {
             //draw the curve
             Geometry orbit = new Geometry(celestialBody.getName() + " elliptic curve");
             Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-            mat.setColor("Color", ColorRGBA.Red);
+            mat.setColor("Color", ColorRGBA.Cyan);
+
             //mat.getAdditionalRenderState().setLineWidth(2f);
             orbit.setMaterial(mat);
             orbit.setMesh(orbitMesh);

@@ -28,11 +28,10 @@ public class CelestialBodiesInformation {
     private final Geometry celestialBody;
     private Mesh meshUsed;
 
-    protected CelestialBodiesInformation(String name, float radius, float weight, Vector3f initialPosition, String pathToTexture, float eccentricity, float E0, float orbitalRotationTime, float SelfRotationSpeed, float semiMajorAxis, float inclination) {
+    protected CelestialBodiesInformation(String name, float radius, float weight, String pathToTexture, float eccentricity, float E0, float orbitalRotationTime, float SelfRotationSpeed, float semiMajorAxis, float inclination) {
         this.name = name;
         this.radius = radius;
         this.weight = weight;
-        this.initialPosition = initialPosition;
         this.pathToTexture = pathToTexture;
         this.eccentricity = eccentricity;
         this.orbitalRotationTime = orbitalRotationTime;
@@ -40,6 +39,8 @@ public class CelestialBodiesInformation {
         this.semiMajorAxis = semiMajorAxis;
         this.inclination = inclination;
 
+        //calculate the initial position of the celestial body
+        this.initialPosition = new Vector3f(0,0,semiMajorAxis);
         //create the celestial body in the scene
         CelestialBodiesCreation creator = new CelestialBodiesCreation();
         this.celestialBody = creator.createBody(this);
