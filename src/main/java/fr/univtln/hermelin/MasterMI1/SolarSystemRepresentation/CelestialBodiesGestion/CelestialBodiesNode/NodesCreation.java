@@ -13,6 +13,7 @@ public class NodesCreation {
     private final Node solarSystemRootNode;
     private final Node sunToEarthNode;
     private final Node earthToMoonNode;
+    private final Node sunToMarsNode;
 
     //private constructor
     private NodesCreation(SimpleApplication app) {
@@ -21,12 +22,16 @@ public class NodesCreation {
 
         //earth node
         this.sunToEarthNode = new Node("sunToEarthNode");
+        this.sunToMarsNode = new Node("sunToMarsNode");
 
         //moon node link to earth
         this.earthToMoonNode = new Node("earthToMoonNode");
 
         //link the nodes to the root
         solarSystemRootNode.attachChild(sunToEarthNode);
+        solarSystemRootNode.attachChild(sunToMarsNode);
+
+        //link the moon to the earth
         sunToEarthNode.attachChild(earthToMoonNode);
     }
 
@@ -36,9 +41,7 @@ public class NodesCreation {
             return null;
         } else {
             NB_UNIVERSE++;
-            NodesCreation node = new NodesCreation(app);
-            NodeUsed.setNodeUsed(node);
-            return node;
+            return new NodesCreation(app);
         }
     }
 
@@ -62,6 +65,9 @@ public class NodesCreation {
                 earthToMoonNode.setLocalTranslation(2,0,0);
                 earthToMoonNode.attachChild(celestialBody);
             }
+            case "mars" -> {
+                sunToMarsNode.attachChild(celestialBody);
+            }
             default -> {throw new IllegalArgumentException("Unknown celestial body");}
         }
     }
@@ -71,6 +77,7 @@ public class NodesCreation {
         switch (name) {
             case "moon" -> {return earthToMoonNode;}
             case "earth" -> {return sunToEarthNode;}
+            case "mars" -> {return sunToMarsNode;}
             default -> {return solarSystemRootNode;}
         }
     }

@@ -10,11 +10,11 @@ public class EarthInformations extends CelestialBodiesInformation {
         super(name, radius, weight, initialPosition, pathToTexture, eccentricity, E0, orbitalRotationTime, SelfRotationTime, semiMajorAxis,inclination);
     }
 
-    public static EarthInformations getEarth(){
+    public static void createEarth(){
         if (numberOfEarth == 1){
-            return null;
+            return;
         }
         numberOfEarth++;
-        return new EarthInformations("earth", 1f, 1f, new Vector3f(2, 0, 0), "Textures/earth.jpg", 0.0167f, 0, 2*3.141592653589793f/365.25f, 2*3.141592653589793f, 0,23.44f*FastMath.PI/180);
+        new EarthInformations("earth", 1f, 1f, new Vector3f(2, 0, 0), "Textures/earth.jpg", 0.0167f, 0, 2 * 3.141592653589793f / 365.25f, 2 * 3.141592653589793f, 20, 23.44f * FastMath.PI / 180);
     }
 }

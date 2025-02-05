@@ -9,11 +9,11 @@ public class SunInformations extends CelestialBodiesInformation {
         super(name, radius, weight, initialPosition, pathToTexture, eccentricity, E0, orbitalRotationTime, SelfRotationTime, semiMajorAxis,inclination);
     }
 
-    public static SunInformations getSun(){
+    public static void createSun(){
         if (numberOfSun == 1){
-            return null;
+            return;
         }
         numberOfSun++;
-        return new SunInformations("sun", 1f, 1f, new Vector3f(0, 0, 0), "Textures/sun.jpg", 0.0167f, 0, 2*3.141592653589793f/365.25f, 2*3.141592653589793f, 0,0);
+        new SunInformations("sun", 1f, 1f, new Vector3f(0, 0, 0), "Textures/sun.jpg", 0.0167f, 0, 2 * 3.141592653589793f / 365.25f, 2 * 3.141592653589793f, 0, 0);
     }
 }

@@ -1,25 +1,41 @@
 package fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.asset.AssetManager;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesInformation.EarthInformations;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesInformation.SunInformations;
-import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation.CelestialBodiesCreation;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesInformation.MoonInformations;
-import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.LightSource.LightSources;
-import java.util.Objects;
+import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesNode.NodesCreation;
+import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodsiesOrbitalRepresentation.OrbitalsRepresentation;
+import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.LightSources.LightSources;
+import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesInformation.MarsInformations;
 
 public class CelestialBodiesDisplay {
+    private static AssetManager assetManager;
+    private static NodesCreation node;
+
+    public static AssetManager getAssetManager(){
+        return assetManager;
+    }
+
+    public static NodesCreation getNodeDisplay(){
+        return node;
+    }
 
     public static void display(SimpleApplication app){
-        CelestialBodiesCreation creator = CelestialBodiesCreation.startCreation(app);
+        assetManager = app.getAssetManager();
+        node = NodesCreation.createNodes(app);
 
 
-        creator.linkBodyToSolarSystem(creator.createBody( Objects.requireNonNull(EarthInformations.getEarth()) ));
-        creator.linkBodyToSolarSystem(creator.createBody( Objects.requireNonNull(SunInformations.getSun()) ));
-        creator.linkBodyToSolarSystem(creator.createBody( Objects.requireNonNull(MoonInformations.getMoon()) ));
+        SunInformations.createSun();
+        EarthInformations.createEarth();
+        MoonInformations.createMoon();
+        MarsInformations.createMars();
 
-        creator.addSpaceAround();
+        node.addSpaceAround(assetManager);
         LightSources.addLightSource();
+
+        OrbitalsRepresentation.showCelestialBodiesOrbitals(true);
     }
 
     public static void rotation(SimpleApplication app){

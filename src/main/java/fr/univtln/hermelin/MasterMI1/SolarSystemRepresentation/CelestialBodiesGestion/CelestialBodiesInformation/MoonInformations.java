@@ -10,11 +10,11 @@ public class MoonInformations extends CelestialBodiesInformation {
         super(name, radius, weight, initialPosition, pathToTexture, eccentricity, E0, orbitalRotationTime, SelfRotationTime, semiMajorAxis,inclination);
     }
 
-    public static MoonInformations getMoon(){
+    public static void createMoon(){
         if (numberOfMoon == 1){
-            return null;
+            return;
         }
         numberOfMoon++;
-        return new MoonInformations("moon", 1f, 1f, new Vector3f(0, 0, 2), "Textures/moon.jpg", 0.0167f, 0, 2*3.141592653589793f/365.25f, 2*3.141592653589793f, 0,5.145f* FastMath.PI/180);
+        new MoonInformations("moon", 1f, 1f, new Vector3f(0, 0, 2), "Textures/moon.jpg", 0.0167f, 0, 2 * 3.141592653589793f / 365.25f, 2 * 3.141592653589793f, 0, 5.145f * FastMath.PI / 180);
     }
 }
