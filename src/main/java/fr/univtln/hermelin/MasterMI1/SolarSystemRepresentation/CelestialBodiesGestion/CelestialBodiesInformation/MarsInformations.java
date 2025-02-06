@@ -15,7 +15,7 @@ public class MarsInformations extends CelestialBodiesInformation {
                 return;
             }
             numberOfMars++;
-            new MarsInformations("mars", 1f, 1f, "Textures/mars.jpg", 0.0167f, 2 * 3.141592653589793f / 365.25f, 2 * 3.141592653589793f, 10, 23.44f * FastMath.PI / 180);
+            new MarsInformations("mars", 1f, 1f, "Textures/mars.jpg", 0.0167f, 2 * FastMath.PI / 600f, 2 * 3.141592653589793f, 10, 23.44f * FastMath.PI / 180);
         }
 
 

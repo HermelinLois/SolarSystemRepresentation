@@ -6,9 +6,11 @@ import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGe
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesInformation.SunInformations;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesInformation.MoonInformations;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesNode.NodesCreation;
+import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesRotations.CelestialBodiesRotations;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodsiesOrbitalRepresentation.OrbitalsRepresentation;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.LightSources.LightSources;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesInformation.MarsInformations;
+import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.InputsGestion;
 
 public class CelestialBodiesDisplay {
     private static AssetManager assetManager;
@@ -34,11 +36,11 @@ public class CelestialBodiesDisplay {
 
         node.addSpaceAround(assetManager);
         LightSources.addLightSource();
-
-        OrbitalsRepresentation.showCelestialBodiesOrbitals(true);
     }
 
-    public static void rotation(SimpleApplication app){
+    public static void rotation(float tpf){
+        boolean pause = InputsGestion.getPauseState();
+        CelestialBodiesRotations.rotateCelestialBodies(tpf, pause);
 
     }
 }

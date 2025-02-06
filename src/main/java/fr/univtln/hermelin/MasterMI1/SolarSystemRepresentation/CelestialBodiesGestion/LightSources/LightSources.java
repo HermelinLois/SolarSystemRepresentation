@@ -2,6 +2,7 @@ package fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesG
 
 import com.jme3.light.AmbientLight;
 import com.jme3.light.PointLight;
+import com.jme3.math.Vector3f;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesDisplay;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesInformation.CelestialBodiesInformation;
 import com.jme3.math.ColorRGBA;
@@ -14,14 +15,13 @@ public abstract class LightSources {
         AmbientLight ambientLight = new AmbientLight();
 
         lightSource.setColor(ColorRGBA.White);
-        ambientLight.setColor(ColorRGBA.White);
-        lightSource.setRadius(10f);
+        ambientLight.setColor(ColorRGBA.White.mult(0.3f));
 
         //set the light source to the sun position
-        lightSource.setPosition(CelestialBodiesInformation.getCelestialBodiesMap().get("sun").getInitialPosition());
+        lightSource.setPosition(new Vector3f(0,0,0));
 
         //get the node used
-        CelestialBodiesDisplay.getNodeDisplay().getNode(" ").addLight(lightSource);
-        CelestialBodiesDisplay.getNodeDisplay().getNode(" ").addLight(ambientLight);
+        CelestialBodiesDisplay.getNodeDisplay().getNode("root").addLight(lightSource);
+        CelestialBodiesDisplay.getNodeDisplay().getNode("root").addLight(ambientLight);
     }
 }

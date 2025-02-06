@@ -18,7 +18,6 @@ public class CelestialBodiesInformation {
     private final String name;
     private final float radius;
     private final float weight;
-    private final Vector3f initialPosition;
     private final String pathToTexture;
     private final float eccentricity;
     private final float orbitalRotationTime;
@@ -39,8 +38,6 @@ public class CelestialBodiesInformation {
         this.semiMajorAxis = semiMajorAxis;
         this.inclination = inclination;
 
-        //calculate the initial position of the celestial body
-        this.initialPosition = new Vector3f(0,0,semiMajorAxis);
         //create the celestial body in the scene
         CelestialBodiesCreation creator = new CelestialBodiesCreation();
         this.celestialBody = creator.createBody(this);
@@ -54,10 +51,6 @@ public class CelestialBodiesInformation {
 
     public float getRadius() {
         return radius;
-    }
-
-    public Vector3f getInitialPosition() {
-        return initialPosition;
     }
 
     public String getPathToTexture(){
@@ -103,6 +96,7 @@ public class CelestialBodiesInformation {
     public Vector3f calculatePosition(float angle){
         float a = semiMajorAxis;
         float b = a * FastMath.sqrt(1 - eccentricity*eccentricity);
+        float modAngle = angle % (2*FastMath.PI);
         return new Vector3f(a*FastMath.cos(angle),0,b*FastMath.sin(angle));
     }
 

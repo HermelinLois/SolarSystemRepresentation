@@ -15,6 +15,6 @@ public class EarthInformations extends CelestialBodiesInformation {
             return;
         }
         numberOfEarth++;
-        new EarthInformations("earth", 1f, 1f, "Textures/earth.jpg", 0.0167f, 2 * FastMath.PI / 365.25f, 2 * 3.141592653589793f, 20, 23.44f * FastMath.PI / 180);
+        new EarthInformations("earth", 1f, 1f, "Textures/earth.jpg", 0.0167f, 5f, 2 * FastMath.PI, 20, 23.44f * FastMath.PI / 180);
     }
 }

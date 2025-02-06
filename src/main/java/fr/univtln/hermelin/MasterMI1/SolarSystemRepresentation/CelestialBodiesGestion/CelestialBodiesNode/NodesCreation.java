@@ -15,9 +15,11 @@ public class NodesCreation {
 
     //root node of the solar system
     private final Node solarSystemRootNode;
-    private final Node sunToEarthNode;
-    private final Node earthToMoonNode;
-    private final Node sunToMarsNode;
+    private final Node sunNode;
+    private final Node earthNode;
+    private final Node moonNode;
+
+    private final Node marsNode;
 
     //private constructor
     private NodesCreation(SimpleApplication app) {
@@ -25,18 +27,21 @@ public class NodesCreation {
         this.solarSystemRootNode = app.getRootNode();
 
         //earth node
-        this.sunToEarthNode = new Node("sunToEarthNode");
-        this.sunToMarsNode = new Node("sunToMarsNode");
+        this.sunNode = new Node("sunNode");
+
+        this.earthNode = new Node("earthNode");
+        this.marsNode = new Node("marsNode");
 
         //moon node link to earth
-        this.earthToMoonNode = new Node("earthToMoonNode");
+        this.moonNode = new Node("moonNode");
 
         //link the nodes to the root
-        solarSystemRootNode.attachChild(sunToEarthNode);
-        solarSystemRootNode.attachChild(sunToMarsNode);
+        solarSystemRootNode.attachChild(sunNode);
+        sunNode.attachChild(earthNode);
+        sunNode.attachChild(marsNode);
 
         //link the moon to the earth
-        sunToEarthNode.attachChild(earthToMoonNode);
+        earthNode.attachChild(moonNode);
     }
 
     //create a new instance of NodesCreation
@@ -60,17 +65,17 @@ public class NodesCreation {
 
         switch (name) {
             case "sun" -> {
-                solarSystemRootNode.attachChild(celestialBody);
+                sunNode.attachChild(celestialBody);
             }
             case "earth" -> {
-                sunToEarthNode.attachChild(celestialBody);
+                earthNode.attachChild(celestialBody);
             }
             case "moon" -> {
-                earthToMoonNode.setLocalTranslation(celestialBodiesList.get("earth").getInitialPosition());
-                earthToMoonNode.attachChild(celestialBody);
+
+                moonNode.attachChild(celestialBody);
             }
             case "mars" -> {
-                sunToMarsNode.attachChild(celestialBody);
+                marsNode.attachChild(celestialBody);
             }
             default -> {throw new IllegalArgumentException("Unknown celestial body");}
         }
@@ -79,10 +84,12 @@ public class NodesCreation {
     //get the node
     public Node getNode(String name) {
         switch (name) {
-            case "moon" -> {return earthToMoonNode;}
-            case "earth" -> {return sunToEarthNode;}
-            case "mars" -> {return sunToMarsNode;}
-            default -> {return solarSystemRootNode;}
+            case "moon" -> {return moonNode;}
+            case "earth" -> {return earthNode;}
+            case "mars" -> {return marsNode;}
+            case "sun" -> {return sunNode;}
+            case "root" -> {return solarSystemRootNode;}
+            default -> {throw new IllegalArgumentException("Node non reconnu :(");}
         }
     }
 }

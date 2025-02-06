@@ -49,14 +49,17 @@ public class OrbitalsRepresentation {
             orbit.setMesh(orbitMesh);
 
             //link the curve to the solar system
-            node.getNode(celestialBody.getName()).attachChild(orbit);
+            node.getNode(celestialBody.getName()).getParent().attachChild(orbit);
             celestialBody.setEllipticCurve(orbitMesh);
         } else {
-            celestialBody.getEllipticCurve().clearBuffer(VertexBuffer.Type.Position);
+            if (celestialBody.getEllipticCurve() != null){
+                celestialBody.getEllipticCurve().clearBuffer(VertexBuffer.Type.Position);
+            }
         }
     }
 
     public static void showCelestialBodiesOrbitals(boolean show) {
+
         for (CelestialBodiesInformation celestialBody : celestialBodiesInformationMap.values()) {
             OrbitalsRepresentation representation = new OrbitalsRepresentation();
             representation.showOrbitalRepresentation(celestialBody, show);
