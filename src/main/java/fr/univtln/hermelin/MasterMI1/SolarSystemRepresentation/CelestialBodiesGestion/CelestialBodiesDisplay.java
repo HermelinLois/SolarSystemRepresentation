@@ -28,11 +28,12 @@ public class CelestialBodiesDisplay {
         assetManager = app.getAssetManager();
         node = NodesCreation.createNodes(app);
 
-
         SunInformations.createSun();
         EarthInformations.createEarth();
         MoonInformations.createMoon();
         MarsInformations.createMars();
+
+        OrbitalsRepresentation.initOrbitalRepresentations();
 
         node.addSpaceAround(assetManager);
         LightSources.addLightSource();
@@ -40,7 +41,7 @@ public class CelestialBodiesDisplay {
 
     public static void rotation(float tpf){
         boolean pause = InputsGestion.getPauseState();
-        CelestialBodiesRotations.rotateCelestialBodies(tpf, pause);
+        CelestialBodiesRotations.rotateCelestialBodies(tpf*InputsGestion.getFlowOfTime(), pause);
 
     }
 }

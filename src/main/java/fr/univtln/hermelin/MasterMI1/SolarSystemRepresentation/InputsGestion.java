@@ -10,7 +10,8 @@ import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGe
 public class InputsGestion {
     private final InputManager inputsManager;
     private static boolean pause = false;
-    private static boolean show = false;
+    private static boolean show = true;
+    private static float flowOftime = 1;
 
 
     public InputsGestion(InputManager inputsManager){
@@ -27,9 +28,22 @@ public class InputsGestion {
     private final AnalogListener analogListener = new AnalogListener() {
         public void onAnalog(String name, float keyPressed, float tpf){
             if (name.equals("Rewind")){
-
+                if (flowOftime < 1e-1f && flowOftime > 0){
+                    flowOftime = -flowOftime;
+                } else if (flowOftime > 1e-1f){
+                    flowOftime *= 0.8f;
+                } else {
+                    flowOftime *= 1.2f;
+                }
             }
             if (name.equals("Forward")){
+                if (flowOftime < -1e-1f){
+                    flowOftime *=0.8f;
+                } else if (flowOftime > -1e-1f && flowOftime < 0){
+                    flowOftime = -flowOftime;
+                } else {
+                    flowOftime *= 1.2f;
+                }
             }
 
         }
@@ -49,5 +63,10 @@ public class InputsGestion {
 
     public static boolean getPauseState(){
         return pause;
+    }
+
+    public static float getFlowOfTime(){
+        System.out.println(flowOftime);
+        return flowOftime;
     }
 }

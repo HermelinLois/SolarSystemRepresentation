@@ -19,7 +19,8 @@ public class OrbitalsRepresentation {
     private static final AssetManager assetManager = CelestialBodiesDisplay.getAssetManager();
     private final static Map<String, CelestialBodiesInformation> celestialBodiesInformationMap = CelestialBodiesInformation.getCelestialBodiesMap();
 
-    private Vector3f[] createPoints(CelestialBodiesInformation celestialBody, int numberOfPoints){
+    @SuppressWarnings("SameParameterValue")
+    private static Vector3f[] createPoints(CelestialBodiesInformation celestialBody, int numberOfPoints){
         Vector3f[] points = new Vector3f[numberOfPoints];
 
         for (int i = 0 ; i < numberOfPoints ; i ++){
@@ -29,14 +30,12 @@ public class OrbitalsRepresentation {
         return points;
     }
 
-    private void showOrbitalRepresentation(CelestialBodiesInformation celestialBody, boolean show){
-        if (show){
-            Vector3f[] points = this.createPoints(celestialBody, 1000);
+    public static void initOrbitalRepresentations(){
+        for (CelestialBodiesInformation celestialBody : celestialBodiesInformationMap.values()) {
 
             //create the mesh
             Mesh orbitMesh = new Mesh();
             orbitMesh.setMode(Mesh.Mode.LineStrip);
-            orbitMesh.setBuffer(VertexBuffer.Type.Position, 3, BufferUtils.createFloatBuffer(points));
             orbitMesh.updateBound();
 
             //draw the curve
@@ -51,6 +50,19 @@ public class OrbitalsRepresentation {
             //link the curve to the solar system
             node.getNode(celestialBody.getName()).getParent().attachChild(orbit);
             celestialBody.setEllipticCurve(orbitMesh);
+
+            showOrbitalRepresentation(celestialBody, true);
+        }
+    }
+
+
+    private static void showOrbitalRepresentation(CelestialBodiesInformation celestialBody, boolean show){
+        if (show){
+            Mesh orbitMesh = celestialBody.getEllipticCurve();
+            Vector3f[] points = createPoints(celestialBody, 100);
+            orbitMesh.setBuffer(VertexBuffer.Type.Position, 3, BufferUtils.createFloatBuffer(points));
+            orbitMesh.updateBound();
+
         } else {
             if (celestialBody.getEllipticCurve() != null){
                 celestialBody.getEllipticCurve().clearBuffer(VertexBuffer.Type.Position);
@@ -59,10 +71,8 @@ public class OrbitalsRepresentation {
     }
 
     public static void showCelestialBodiesOrbitals(boolean show) {
-
         for (CelestialBodiesInformation celestialBody : celestialBodiesInformationMap.values()) {
-            OrbitalsRepresentation representation = new OrbitalsRepresentation();
-            representation.showOrbitalRepresentation(celestialBody, show);
+            showOrbitalRepresentation(celestialBody, show);
         }
     }
 }
