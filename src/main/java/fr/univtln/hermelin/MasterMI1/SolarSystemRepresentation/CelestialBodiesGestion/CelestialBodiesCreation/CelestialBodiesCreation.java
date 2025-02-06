@@ -31,7 +31,7 @@ public class CelestialBodiesCreation {
         celestialBody.setLocalTranslation( celestialElement.getInitialPosition() );
 
         //axed well in the space
-        celestialBody.rotate( -FastMath.PI/2, 0, -celestialElement.getInclination() );
+        celestialBody.rotate( -FastMath.PI/2 + celestialElement.getInclination(), 0, 0 );
 
         node.linkBodyToSolarSystem(celestialBody);
 

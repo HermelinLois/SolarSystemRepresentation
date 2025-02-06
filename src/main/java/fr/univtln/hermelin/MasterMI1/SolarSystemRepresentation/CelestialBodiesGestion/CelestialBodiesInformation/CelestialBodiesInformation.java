@@ -15,27 +15,27 @@ public class CelestialBodiesInformation {
     private static final Map<String, CelestialBodiesInformation> celestialBodiesInformationMap = new HashMap<>();
 
     //information needed for each celestial body
-    private String name;
-    private float radius;
-    private float weight;
-    private Vector3f initialPosition;
-    private String pathToTexture;
-    private float eccentricity;
-    private float orbitalRotationTime;
-    private float SelfRotationSpeed;
-    private float semiMajorAxis;
-    private float inclination;
+    private final String name;
+    private final float radius;
+    private final float weight;
+    private final Vector3f initialPosition;
+    private final String pathToTexture;
+    private final float eccentricity;
+    private final float orbitalRotationTime;
+    private final float selfRotationSpeed;
+    private final float semiMajorAxis;
+    private final float inclination;
     private final Geometry celestialBody;
     private Mesh meshUsed;
 
-    protected CelestialBodiesInformation(String name, float radius, float weight, String pathToTexture, float eccentricity, float E0, float orbitalRotationTime, float SelfRotationSpeed, float semiMajorAxis, float inclination) {
+    protected CelestialBodiesInformation(String name, float radius, float weight, String pathToTexture, float eccentricity, float orbitalRotationTime, float SelfRotationSpeed, float semiMajorAxis, float inclination) {
         this.name = name;
         this.radius = radius;
         this.weight = weight;
         this.pathToTexture = pathToTexture;
         this.eccentricity = eccentricity;
         this.orbitalRotationTime = orbitalRotationTime;
-        this.SelfRotationSpeed = SelfRotationSpeed;
+        this.selfRotationSpeed = SelfRotationSpeed;
         this.semiMajorAxis = semiMajorAxis;
         this.inclination = inclination;
 
@@ -77,7 +77,7 @@ public class CelestialBodiesInformation {
     }
 
     public float getSelfRotationSpeed() {
-        return SelfRotationSpeed;
+        return selfRotationSpeed;
     }
 
     public float getSemiMajorAxis() {
