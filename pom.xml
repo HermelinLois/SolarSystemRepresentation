@@ -19,7 +19,6 @@
     </properties>
 
     <dependencies>
-
         <!-- JMonkeyEngine -->
         <dependency>
             <groupId>${jme3_g}</groupId>
@@ -97,6 +96,23 @@
             <artifactId>annotations</artifactId>
             <version>23.0.0</version>
             <scope>compile</scope>
+        </dependency>
+
+        <!-- Interface -->
+        <dependency>
+            <groupId>com.github.nifty-gui</groupId>
+            <artifactId>nifty</artifactId>
+            <version>1.4.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.nifty-gui</groupId>
+            <artifactId>nifty-default-controls</artifactId>
+            <version>1.4.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.nifty-gui</groupId>
+            <artifactId>nifty-style-black</artifactId>
+            <version>1.4.3</version>
         </dependency>
     </dependencies>
 </project>

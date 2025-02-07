@@ -41,7 +41,7 @@ public class OrbitalsRepresentation {
             //draw the curve
             Geometry orbit = new Geometry(celestialBody.getName() + " elliptic curve");
             Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-            mat.setColor("Color", ColorRGBA.Cyan);
+            mat.setColor("Color", ColorRGBA.Cyan.mult(0.2f));
 
             //mat.getAdditionalRenderState().setLineWidth(2f);
             orbit.setMaterial(mat);

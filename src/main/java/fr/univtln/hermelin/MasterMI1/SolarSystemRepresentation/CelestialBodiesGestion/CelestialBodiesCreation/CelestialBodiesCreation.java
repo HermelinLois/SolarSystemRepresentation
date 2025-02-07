@@ -4,6 +4,8 @@ import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
+import com.jme3.post.FilterPostProcessor;
+import com.jme3.post.filters.BloomFilter;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Sphere;
@@ -32,6 +34,12 @@ public class CelestialBodiesCreation {
         if (celestialBody.getName().equals("sun")){
             celestialBodyMat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
             celestialBodyMat.setTexture("ColorMap", celestialBodyTexture);
+
+            FilterPostProcessor fpp = new FilterPostProcessor(assetManager);
+            BloomFilter bloom = new BloomFilter();
+            fpp.addFilter(bloom);
+            CelestialBodiesDisplay.getApp().getViewPort().addProcessor(fpp);
+
         } else {
             celestialBodyMat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
             celestialBodyMat.setColor("Ambient", ColorRGBA.Gray);

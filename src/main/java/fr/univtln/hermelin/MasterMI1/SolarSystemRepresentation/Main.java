@@ -1,6 +1,7 @@
 package fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.math.Vector3f;
 import com.jme3.system.AppSettings;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesDisplay;
 
@@ -16,11 +17,19 @@ public class Main extends SimpleApplication {
         app.start();
     }
 
+
     @Override
     public void simpleInitApp() {
-        flyCam.setMoveSpeed(10f);
-        InputsGestion inputs = new InputsGestion(inputManager);
-        CelestialBodiesDisplay.display(this);
+        //deactivate the flyCam
+        flyCam.setEnabled(false);
+        cam.setLocation(new Vector3f(0, 30, 50));
+        cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
+
+        //display the celestial bodies
+        CelestialBodiesDisplay.init(this).display();
+
+        //create the inputs
+        new InputsGestion(inputManager,cam);
     }
 
     @Override

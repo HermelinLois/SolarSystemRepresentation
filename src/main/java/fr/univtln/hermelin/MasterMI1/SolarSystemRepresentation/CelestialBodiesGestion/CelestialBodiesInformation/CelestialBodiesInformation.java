@@ -31,11 +31,11 @@ public class CelestialBodiesInformation {
     private final Geometry celestialBody;
     private Mesh meshUsed;
 
-    protected CelestialBodiesInformation(String name, float radius, float weight, String pathToTexture, float eccentricity, float orbitalRotationTime, float SelfRotationSpeed, float semiMajorAxis, float inclination) {
+    protected CelestialBodiesInformation(String name, float radius, float weight, float eccentricity, float orbitalRotationTime, float SelfRotationSpeed, float semiMajorAxis, float inclination) {
         this.name = name;
         this.radius = radius;
         this.weight = weight;
-        this.pathToTexture = pathToTexture;
+        this.pathToTexture = "Textures/" + name+".jpg";
         this.eccentricity = eccentricity;
         this.orbitalRotationTime = orbitalRotationTime;
         this.selfRotationSpeed = SelfRotationSpeed;

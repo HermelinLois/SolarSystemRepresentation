@@ -6,8 +6,8 @@ import com.jme3.math.Vector3f;
 public class MoonInformations extends CelestialBodiesInformation {
     private static int numberOfMoon = 0;
 
-    private MoonInformations(String name, float radius, float weight, String pathToTexture, float eccentricity, float orbitalRotationTime, float SelfRotationSpeed, float semiMajorAxis, float inclination) {
-        super(name, radius, weight, pathToTexture, eccentricity, orbitalRotationTime, SelfRotationSpeed, semiMajorAxis,inclination);
+    private MoonInformations(String name, float radius, float weight, float eccentricity, float orbitalRotationTime, float SelfRotationSpeed, float semiMajorAxis, float inclination) {
+        super(name, radius, weight, eccentricity, orbitalRotationTime, SelfRotationSpeed, semiMajorAxis,inclination);
     }
 
     public static void createMoon(){
@@ -15,6 +15,6 @@ public class MoonInformations extends CelestialBodiesInformation {
             return;
         }
         numberOfMoon++;
-        new MoonInformations("moon", 1f, 1f, "Textures/moon.jpg", 0.0167f, 0.1f, 2*FastMath.PI, 5, 5.145f * FastMath.PI / 180);
+        new MoonInformations("moon", 1f, 1f, 0.0167f, 0.1f, 2*FastMath.PI, 2, 5.145f * FastMath.PI / 180);
     }
 }

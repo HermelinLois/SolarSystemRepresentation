@@ -15,7 +15,7 @@ public abstract class LightSources {
         AmbientLight ambientLight = new AmbientLight();
 
         lightSource.setColor(ColorRGBA.White);
-        ambientLight.setColor(ColorRGBA.White.mult(0.3f));
+        ambientLight.setColor(ColorRGBA.Blue.mult(0.3f));
 
         //set the light source to the sun position
         lightSource.setPosition(new Vector3f(0,0,0));

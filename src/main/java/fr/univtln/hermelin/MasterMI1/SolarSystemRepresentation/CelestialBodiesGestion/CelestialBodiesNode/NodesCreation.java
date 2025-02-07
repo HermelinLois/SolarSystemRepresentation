@@ -18,8 +18,9 @@ public class NodesCreation {
     private final Node sunNode;
     private final Node earthNode;
     private final Node moonNode;
-
     private final Node marsNode;
+    private final Node saturnNode;
+    private final Node mercuryNode;
 
     //private constructor
     private NodesCreation(SimpleApplication app) {
@@ -35,13 +36,26 @@ public class NodesCreation {
         //moon node link to earth
         this.moonNode = new Node("moonNode");
 
+        //saturn node
+        this.saturnNode = new Node("saturnNode");
+
+        this.mercuryNode = new Node("mercuryNode");
+
         //link the nodes to the root
         solarSystemRootNode.attachChild(sunNode);
+
+        //earthSystem
         sunNode.attachChild(earthNode);
+        earthNode.attachChild(moonNode);
+
+        //marsSystem
         sunNode.attachChild(marsNode);
 
-        //link the moon to the earth
-        earthNode.attachChild(moonNode);
+        //saturnSystem
+        sunNode.attachChild(saturnNode);
+
+        //mercurySystem
+        sunNode.attachChild(mercuryNode);
     }
 
     //create a new instance of NodesCreation
@@ -77,6 +91,12 @@ public class NodesCreation {
             case "mars" -> {
                 marsNode.attachChild(celestialBody);
             }
+            case "saturn" -> {
+                saturnNode.attachChild(celestialBody);
+            }
+            case "mercury" -> {
+                mercuryNode.attachChild(celestialBody);
+            }
             default -> {throw new IllegalArgumentException("Unknown celestial body");}
         }
     }
@@ -88,8 +108,10 @@ public class NodesCreation {
             case "earth" -> {return earthNode;}
             case "mars" -> {return marsNode;}
             case "sun" -> {return sunNode;}
+            case "mercury" -> {return mercuryNode;}
+            case "saturn" -> {return saturnNode;}
             case "root" -> {return solarSystemRootNode;}
-            default -> {throw new IllegalArgumentException("Node non reconnu :(");}
+            default -> {throw new IllegalArgumentException("miss match node :(");}
         }
     }
 }
