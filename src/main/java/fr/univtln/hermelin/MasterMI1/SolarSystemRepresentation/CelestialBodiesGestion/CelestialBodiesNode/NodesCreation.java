@@ -31,6 +31,7 @@ public class NodesCreation {
         this.sunNode = new Node("sunNode");
 
         this.earthNode = new Node("earthNode");
+
         this.marsNode = new Node("marsNode");
 
         //moon node link to earth
@@ -46,6 +47,7 @@ public class NodesCreation {
 
         //earthSystem
         sunNode.attachChild(earthNode);
+
         earthNode.attachChild(moonNode);
 
         //marsSystem

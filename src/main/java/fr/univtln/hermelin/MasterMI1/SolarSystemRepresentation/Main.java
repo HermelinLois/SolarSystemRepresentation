@@ -3,9 +3,12 @@ package fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation;
 import com.jme3.app.SimpleApplication;
 import com.jme3.math.Vector3f;
 import com.jme3.system.AppSettings;
+import de.lessvoid.nifty.Nifty;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesDisplay;
+import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesInformation.CelestialBodiesInformation;
 
 public class Main extends SimpleApplication {
+    private InfoInterfaceUser celestialBodyInterface;
 
     public static void main(String[] args) {
         Main app = new Main();
@@ -17,7 +20,6 @@ public class Main extends SimpleApplication {
         app.start();
     }
 
-
     @Override
     public void simpleInitApp() {
         //deactivate the flyCam
@@ -28,12 +30,23 @@ public class Main extends SimpleApplication {
         //display the celestial bodies
         CelestialBodiesDisplay.init(this).display();
 
+        //create the interface
+        celestialBodyInterface = new InfoInterfaceUser();
+        celestialBodyInterface.initialize(stateManager, this);
+        stateManager.attach(celestialBodyInterface);
+
+        CelestialBodiesInformation defaultBody = CelestialBodiesInformation.getCelestialBodiesMap().get("sun");
+        celestialBodyInterface.createUserInterface();
+        celestialBodyInterface.updatePlanetInfo(defaultBody);
+
         //create the inputs
-        new InputsGestion(inputManager,cam);
+        new InputsGestion(inputManager,cam,celestialBodyInterface );
     }
 
     @Override
     public void simpleUpdate(float tpf) {
         CelestialBodiesDisplay.rotation(tpf);
+        InputsGestion.updateCameraPosition();
+        InputsGestion.updateCameraOrientation();
     }
 }
