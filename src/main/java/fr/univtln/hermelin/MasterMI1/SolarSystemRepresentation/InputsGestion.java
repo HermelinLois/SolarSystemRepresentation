@@ -140,7 +140,7 @@ public class InputsGestion {
 
     public static void updateCameraOrientation() {
         Vector3f position = bodyInView.getCelestialBody().getLocalTranslation();
-        camNode.setLocalTranslation(position.add(new Vector3f(6f, 2f, 2f)).mult(position.length()));
+        camNode.setLocalTranslation(position.add(2, 10, 0));
     }
 
     public static boolean getPauseState() {
