@@ -14,6 +14,6 @@ public class SunInformations extends CelestialBodiesInformation {
             return;
         }
         numberOfSun++;
-        new SunInformations("sun", 1f, 1f, 0.0167f, 2 * 3.141592653589793f / 365.25f, 2 * 3.141592653589793f, 0, 0);
+        new SunInformations("sun", 2f, 1f, 0.0167f, 2 * 3.141592653589793f / 365.25f, 2 * 3.141592653589793f, 0, 0);
     }
 }

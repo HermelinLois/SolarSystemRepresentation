@@ -134,13 +134,19 @@ public class InputsGestion {
         }
     };
 
-    public static void updateCameraPosition() {
+    public static void updateCameraOrientation() {
         camNode.lookAt(celestialBodiesMap.get("sun").getCelestialBody().getLocalTranslation(), Vector3f.UNIT_Y);
     }
 
-    public static void updateCameraOrientation() {
+    public static void updateCameraPosition() {
         Vector3f position = bodyInView.getCelestialBody().getLocalTranslation();
-        camNode.setLocalTranslation(position.add(2, 10, 0));
+
+
+        if (bodyInView.getName().equals("sun")) {
+            camNode.setLocalTranslation(position.add(new Vector3f(0, 50, 100)));
+        } else {
+            camNode.setLocalTranslation( position.add(1, 2, 0) );
+        }
     }
 
     public static boolean getPauseState() {

@@ -101,7 +101,7 @@ public class CelestialBodiesInformation {
         float a = semiMajorAxis;
         float b = a * FastMath.sqrt(1 - eccentricity*eccentricity);
         float modAngle = angle % (2*FastMath.PI);
-        return new Vector3f(a*FastMath.cos(angle),0,b*FastMath.sin(angle));
+        return new Vector3f(a*FastMath.cos(modAngle),0,b*FastMath.sin(modAngle));
     }
 
     public static Map<String,CelestialBodiesInformation> getCelestialBodiesMap(){
