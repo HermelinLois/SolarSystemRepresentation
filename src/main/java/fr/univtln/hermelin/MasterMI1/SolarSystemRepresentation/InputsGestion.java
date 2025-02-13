@@ -11,9 +11,10 @@ import com.jme3.renderer.Camera;
 import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesDisplay;
-import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesInformation.CelestialBodiesInformation;
+import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation.CelestialBodiesInformation;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodsiesOrbitalRepresentation.OrbitalsRepresentation;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesNode.NodesCreation;
+import java.util.List;
 import java.util.Map;
 
 public class InputsGestion {
@@ -24,6 +25,8 @@ public class InputsGestion {
     private static CameraNode camNode;
     private static final NodesCreation node = CelestialBodiesDisplay.getNodeDisplay();
     private static final Map<String, CelestialBodiesInformation> celestialBodiesMap= CelestialBodiesInformation.getCelestialBodiesMap();
+    private static final List<CelestialBodiesInformation> celestialBodiesList = CelestialBodiesInformation.getCelestialBodiesList(); ;
+
     private static CelestialBodiesInformation bodyInView = celestialBodiesMap.get("sun");
     private static InfoInterfaceUser bodyInfoInterface;
 
@@ -82,43 +85,10 @@ public class InputsGestion {
             }
 
             if (name.equals("Switch") && isPressed) {
-                camNumber = (camNumber + 1) % 5;
-
-                switch (camNumber) {
-                    case 0 -> {
-                        node.getNode("mars").detachChild(camNode);
-                        node.getNode("sun").attachChild(camNode);
-                        bodyInView = celestialBodiesMap.get("sun");
-                    }
-
-                    case 1 -> {
-                        node.getNode("mars").detachChild(camNode);
-                        node.getNode("earth").attachChild(camNode);
-                        bodyInView = celestialBodiesMap.get("earth");
-                    }
-
-                    case 2 -> {
-                        node.getNode("earth").detachChild(camNode);
-                        node.getNode("moon").attachChild(camNode);
-                        bodyInView = celestialBodiesMap.get("moon");
-                    }
-
-                    case 3 -> {
-                        node.getNode("moon").detachChild(camNode);
-                        node.getNode("mercury").attachChild(camNode);
-                        bodyInView = celestialBodiesMap.get("mercury");
-                    }
-
-                    case 4 -> {
-                        node.getNode("mercury").detachChild(camNode);
-                        node.getNode("mars").attachChild(camNode);
-                        bodyInView = celestialBodiesMap.get("mars");
-                    }
-                    default -> {
-                        throw new IllegalStateException("Unexpected value: " + camNumber);
-                    }
-                }
+                camNumber = (camNumber + 1) % celestialBodiesList.size();
+                bodyInView = celestialBodiesList.get(camNumber);
                 bodyInfoInterface.updatePlanetInfo(bodyInView);
+                node.getNode(bodyInView.getName()).attachChild(camNode);
             }
 
             if (name.equals("ShowInformation")) {
@@ -136,7 +106,7 @@ public class InputsGestion {
 
     public static void updateCameraPosition() {
         float angle = bodyInView.getAngle();
-        float epsilon = 1.25f;
+        float epsilon = 1.1f;
 
         if (bodyInView.getName().equals("sun")) {
             camNode.setLocalTranslation(new Vector3f(0, 30, 50));;

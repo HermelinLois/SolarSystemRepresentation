@@ -128,8 +128,7 @@
         "sideralOrbit": 27.3217,
         "inclination": 5.145,
         "aroundPlanet": {
-            "planet": "terre",
-            "rel": "https://api.le-systeme-solaire.net/rest/bodies/terre"
+            "planet": "earth"
         }
     }
 }

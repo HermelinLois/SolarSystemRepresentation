@@ -2,43 +2,37 @@ package fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesG
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
-import com.jme3.renderer.Camera;
-import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesInformation.*;
+import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation.BodiesGenerator;
+import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation.CelestialBodiesInformation;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesNode.NodesCreation;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesRotations.CelestialBodiesRotations;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodsiesOrbitalRepresentation.OrbitalsRepresentation;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.LightSources.LightSources;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.InputsGestion;
 
+import java.util.Map;
+import java.util.Objects;
+
 public class CelestialBodiesDisplay {
     private static SimpleApplication app;
     private static AssetManager assetManager;
     private static NodesCreation node;
+    private final static Map<String, CelestialBodiesInformation> celestialBodiesInformationMap = CelestialBodiesInformation.getCelestialBodiesMap();
 
-    private CelestialBodiesDisplay(SimpleApplication application){
+
+    public static void display(SimpleApplication application){
         app = application;
         assetManager = app.getAssetManager();
         node = NodesCreation.createNodes(app);
-    }
 
-    public static CelestialBodiesDisplay init(SimpleApplication application){
-        return new CelestialBodiesDisplay(application);
-    }
+        BodiesGenerator generator = new BodiesGenerator();
+        generator.generateBodies();
 
-    public void display(){
-        SunInformations.createSun();
-        //earthNode
-        EarthInformations.createEarth();
-        MoonInformations.createMoon();
-        //MarsNode
-        MarsInformations.createMars();
-        //MercuryNode
-        MercuryInformations.createMercury();
-        //SaturnNode
-        SaturnInformations.createSaturn();
+        for (CelestialBodiesInformation celestialBody : celestialBodiesInformationMap.values()) {
+            node.linkBodyToSolarSystem(celestialBody.getCelestialBody());
+        }
 
         OrbitalsRepresentation.initOrbitalRepresentations();
-
         node.addSpaceAround(assetManager);
         LightSources.addLightSource();
     }

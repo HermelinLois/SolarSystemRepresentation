@@ -2,8 +2,6 @@ package fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesG
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesInformation.CelestialBodiesInformation;
-
 import java.io.File;
 
 public class BodiesGenerator {
@@ -22,19 +20,19 @@ public class BodiesGenerator {
     public void generateBodies(){
         JsonNode node = getJsonNode();
         for (JsonNode body : node){
-            String name = body.get("name").asText();
-            float radius = body.get("radius").asFloat();
-            float weight = body.get("weight").asFloat();
-            float eccentricity = body.get("eccentricity").asFloat();
-            float orbitalRotationTime = body.get("orbitalRotationTime").asFloat();
-            float selfRotationSpeed = body.get("selfRotationSpeed").asFloat();
-            float semiMajorAxis = body.get("semiMajorAxis").asFloat();
-            float inclination = body.get("inclination").asFloat();
-            new CelestialBodiesInformation(name, radius, weight, eccentricity, orbitalRotationTime, selfRotationSpeed, semiMajorAxis, inclination);
+            String name = body.has("englishName") ? body.get("englishName").asText().toLowerCase() : "Unknown";
+            float radius = body.has("meanRadius") ? body.get("meanRadius").floatValue() : 0.0f;
+            float sideralRotation = body.has("sideralRotation") ? body.get("sideralRotation").floatValue() : 0.0f;
+            float axialTilt = body.has("axialTilt") ? body.get("axialTilt").floatValue() : 0.0f;
+            String bodyType = body.has("bodyType") ? body.get("bodyType").asText() : "Unknown";
+            float semimajorAxis = body.has("semimajorAxis") ? body.get("semimajorAxis").floatValue() : 0.0f;
+            float sideralOrbit = body.has("sideralOrbit") ? body.get("sideralOrbit").floatValue() : 0.0f;
+            float inclination = body.has("inclination") ? body.get("inclination").floatValue() : 0.0f;
+            float eccentricity = body.has("eccentricity") ? body.get("eccentricity").floatValue() : 0.0f;
+
+            if (name.equals("sun") || name.equals("moon") || name.equals("earth") || name.equals("mars")){
+                new CelestialBodiesInformation(name, radius, sideralRotation, axialTilt, bodyType, semimajorAxis, sideralOrbit, inclination,eccentricity);
+            }
         }
     }
-
-
-
-
 }

@@ -9,7 +9,7 @@ import de.lessvoid.nifty.controls.label.builder.LabelBuilder;
 import de.lessvoid.nifty.screen.DefaultScreenController;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
-import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesInformation.CelestialBodiesInformation;
+import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation.CelestialBodiesInformation;
 
 public class InfoInterfaceUser extends BaseAppState implements ScreenController {
     private Nifty nifty;
@@ -100,9 +100,6 @@ public class InfoInterfaceUser extends BaseAppState implements ScreenController 
                 .getRenderer(de.lessvoid.nifty.elements.render.TextRenderer.class)
                 .setText("Name : " + celestialBody.getName());
 
-        nifty.getCurrentScreen().findElementById("CelestialBodyWeight")
-                .getRenderer(de.lessvoid.nifty.elements.render.TextRenderer.class)
-                .setText("Weight : " + celestialBody.getWeight());
 
         nifty.getCurrentScreen().findElementById("CelestialBodyRadius")
                 .getRenderer(de.lessvoid.nifty.elements.render.TextRenderer.class)

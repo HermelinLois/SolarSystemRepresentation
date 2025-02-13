@@ -1,14 +1,17 @@
 package fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesRotations;
 
 import com.jme3.math.FastMath;
-import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesInformation.CelestialBodiesInformation;
+import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation.CelestialBodiesInformation;
 
 public class AnglesCalculator {
 
     public float calculate(float timePassed, CelestialBodiesInformation celestialBody){
 
         //approximation of the angle by the Newton-Raphson method
-        float M = 2 * FastMath.PI/celestialBody.getOrbitalRotationTime() * timePassed;
+        if (celestialBody.getOrbitalRotationTime() == 0) {
+            return 0;
+        }
+        float M = FastMath.TWO_PI/celestialBody.getOrbitalRotationTime() * timePassed;
         float e = celestialBody.getEccentricity();
         float E_n = M;
 

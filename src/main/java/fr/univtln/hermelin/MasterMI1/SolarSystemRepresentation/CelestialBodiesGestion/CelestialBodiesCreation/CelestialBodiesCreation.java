@@ -11,7 +11,6 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.texture.Texture;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesDisplay;
-import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesInformation.CelestialBodiesInformation;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesNode.NodesCreation;
 import org.jetbrains.annotations.NotNull;
 
@@ -51,12 +50,8 @@ public class CelestialBodiesCreation {
         }
         celestialBody.setMaterial(celestialBodyMat);
 
-
         //axed well in the space
-        celestialBody.rotate( -FastMath.PI/2 + celestialElement.getInclination(), 0, 0 );
-
-        node.linkBodyToSolarSystem(celestialBody);
-
+        celestialBody.rotate( -FastMath.PI/2 + FastMath.DEG_TO_RAD*celestialElement.getAxialTilt(), 0, 0 );
         return celestialBody;
     }
 }

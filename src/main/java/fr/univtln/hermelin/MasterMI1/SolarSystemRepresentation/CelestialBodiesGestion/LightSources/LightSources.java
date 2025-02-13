@@ -4,7 +4,6 @@ import com.jme3.light.AmbientLight;
 import com.jme3.light.PointLight;
 import com.jme3.math.Vector3f;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesDisplay;
-import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesInformation.CelestialBodiesInformation;
 import com.jme3.math.ColorRGBA;
 
 public abstract class LightSources {

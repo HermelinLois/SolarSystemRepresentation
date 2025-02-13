@@ -10,7 +10,7 @@ import com.jme3.scene.Mesh;
 import com.jme3.scene.VertexBuffer;
 import com.jme3.util.BufferUtils;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesDisplay;
-import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesInformation.CelestialBodiesInformation;
+import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation.CelestialBodiesInformation;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesNode.NodesCreation;
 import java.util.Map;
 
@@ -19,7 +19,6 @@ public class OrbitalsRepresentation {
     private static final AssetManager assetManager = CelestialBodiesDisplay.getAssetManager();
     private final static Map<String, CelestialBodiesInformation> celestialBodiesInformationMap = CelestialBodiesInformation.getCelestialBodiesMap();
 
-    @SuppressWarnings("SameParameterValue")
     private static Vector3f[] createPoints(CelestialBodiesInformation celestialBody, int numberOfPoints){
         Vector3f[] points = new Vector3f[numberOfPoints];
 
@@ -48,6 +47,7 @@ public class OrbitalsRepresentation {
             orbit.setMesh(orbitMesh);
 
             //link the curve to the solar system
+
             node.getNode(celestialBody.getName()).getParent().attachChild(orbit);
             celestialBody.setEllipticCurve(orbitMesh);
 

@@ -1,53 +1,49 @@
-package fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesInformation;
+package fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation;
 
-import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
-
-import java.util.HashMap;
-import java.util.Map;
-
+import java.util.*;
 import com.jme3.scene.Mesh;
-import com.jme3.scene.VertexBuffer;
-import com.jme3.util.BufferUtils;
-import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation.CelestialBodiesCreation;
 
 public class CelestialBodiesInformation {
     //list of all celestial bodies information
     private static final Map<String, CelestialBodiesInformation> celestialBodiesInformationMap = new HashMap<>();
+    private static final List<CelestialBodiesInformation> celestialBodiesInformationList= new ArrayList<>();
 
     //information needed for each celestial body
     private final String name;
     private final float radius;
-    private final float weight;
+    private final float sideralRotation;
     private final String pathToTexture;
-    private final float eccentricity;
-    private final float orbitalRotationTime;
-    private final float selfRotationSpeed;
+    private final float axialTilt;
+    private final String bodyType;
+    private final float siderealOrbit;
     private final float semiMajorAxis;
     private final float inclination;
     private final Geometry celestialBody;
     private Mesh meshUsed;
     private float angle;
+    private final float eccentricity;
 
-    public CelestialBodiesInformation(String name, float radius, float weight, float eccentricity, float orbitalRotationTime, float SelfRotationSpeed, float semiMajorAxis, float inclination) {
+    protected CelestialBodiesInformation(String name, float radius, float sideralRotation, float axialTilt, String bodyType, float semimajorAxis, float sideralOrbit, float inclination, float eccen) {
         this.name = name;
-        this.radius = radius;
-        this.weight = weight;
-        this.pathToTexture = "Textures/" + name+".jpg";
-        this.eccentricity = eccentricity;
-        this.orbitalRotationTime = orbitalRotationTime;
-        this.selfRotationSpeed = SelfRotationSpeed;
-        this.semiMajorAxis = semiMajorAxis;
+        this.radius = 1;
+        this.sideralRotation = sideralRotation*24*60*60; //in seconds
+        this.axialTilt = axialTilt;
+        this.bodyType = bodyType;
+        this.semiMajorAxis = 1;
+        this.siderealOrbit = sideralOrbit*60*60; //in seconds
         this.inclination = inclination;
+        this.pathToTexture = "Textures/" + name+".jpg";
+        this.eccentricity = eccen;
 
         //create the celestial body in the scene
         CelestialBodiesCreation creator = new CelestialBodiesCreation();
         this.celestialBody = creator.createBody(this);
 
         celestialBodiesInformationMap.put(name, this);
+        celestialBodiesInformationList.add(this);
     }
 
     public String getName() {
@@ -58,24 +54,24 @@ public class CelestialBodiesInformation {
         return radius;
     }
 
+    public String getBodyType() {
+        return bodyType;
+    }
+
     public String getPathToTexture(){
         return pathToTexture;
     }
 
-    public float getWeight() {
-        return weight;
-    }
-
-    public float getEccentricity() {
-        return eccentricity;
+    public float getAxialTilt() {
+        return axialTilt;
     }
 
     public float getOrbitalRotationTime() {
-        return orbitalRotationTime;
+        return siderealOrbit;
     }
 
     public float getSelfRotationSpeed() {
-        return selfRotationSpeed;
+        return sideralRotation;
     }
 
     public float getSemiMajorAxis() {
@@ -100,13 +96,17 @@ public class CelestialBodiesInformation {
 
     public Vector3f calculatePosition(float angle){
         float a = semiMajorAxis;
-        float b = a * FastMath.sqrt(1 - eccentricity*eccentricity);
-        float modAngle = angle % (2*FastMath.PI);
-        return new Vector3f(a*FastMath.cos(modAngle),0,b*FastMath.sin(modAngle));
+        float b = a * FastMath.sqrt(1 - eccentricity * eccentricity);
+
+        return new Vector3f(a*FastMath.cos(angle),0,b*FastMath.sin(angle));
     }
 
     public static Map<String,CelestialBodiesInformation> getCelestialBodiesMap(){
         return  celestialBodiesInformationMap;
+    }
+
+    public static List<CelestialBodiesInformation> getCelestialBodiesList(){
+        return celestialBodiesInformationList;
     }
 
     public void setAngle(float angle){
@@ -115,5 +115,9 @@ public class CelestialBodiesInformation {
 
     public float getAngle(){
         return angle;
+    }
+
+    public float getEccentricity(){
+        return eccentricity;
     }
 }
