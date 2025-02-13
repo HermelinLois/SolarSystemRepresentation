@@ -5,6 +5,7 @@ import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.builder.ScreenBuilder;
+import de.lessvoid.nifty.controls.button.builder.ButtonBuilder;
 import de.lessvoid.nifty.controls.label.builder.LabelBuilder;
 import de.lessvoid.nifty.screen.DefaultScreenController;
 import de.lessvoid.nifty.screen.Screen;
@@ -85,7 +86,7 @@ public class InfoInterfaceUser extends BaseAppState implements ScreenController 
                     }});
                 }});
             }});
-        }}.build(nifty);
+}}.build(nifty);
 
         nifty.gotoScreen("empty");
     }

@@ -12,7 +12,7 @@ public class Main extends SimpleApplication {
     public static void main(String[] args) {
         Main app = new Main();
         AppSettings settings = new AppSettings(true);
-        settings.setFullscreen(false);
+        settings.setFullscreen(true);
         settings.setAudioRenderer(null);
         settings.setFrameRate(60);
         app.setSettings(settings);
@@ -22,7 +22,7 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         //deactivate the flyCam
-        flyCam.setEnabled(true);
+        flyCam.setEnabled(false);
         cam.setLocation(new Vector3f(2, 2, 2));
         cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
 
