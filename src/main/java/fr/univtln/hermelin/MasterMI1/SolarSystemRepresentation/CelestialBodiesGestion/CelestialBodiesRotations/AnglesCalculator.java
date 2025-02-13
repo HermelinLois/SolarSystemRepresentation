@@ -18,6 +18,6 @@ public class AnglesCalculator {
         }
 
         //calculate the true angle because theta = 2 * atan(sqrt((1 + e) / (1 - e)) * tan(E/2)) with the approximation E_n
-        return 2 * FastMath.atan(FastMath.sqrt((1 + e) / (1 - e)) * FastMath.tan(E_n / 2));
+        return (2 * FastMath.atan(FastMath.sqrt((1 + e) / (1 - e)) * FastMath.tan(E_n / 2))) % FastMath.TWO_PI;
     }
 }

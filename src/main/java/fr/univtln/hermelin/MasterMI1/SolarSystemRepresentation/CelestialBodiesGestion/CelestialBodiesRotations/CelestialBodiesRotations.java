@@ -31,6 +31,7 @@ public abstract class CelestialBodiesRotations {
     private static void orbitalRotation(float timePassed, CelestialBodiesInformation celestialBody){
         NodesCreation node = CelestialBodiesDisplay.getNodeDisplay();
         float angle = new AnglesCalculator().calculate(timePassed, celestialBody);
+        celestialBody.setAngle(angle);
         Vector3f position = celestialBody.calculatePosition(angle);
 
         //replace the origin of the body

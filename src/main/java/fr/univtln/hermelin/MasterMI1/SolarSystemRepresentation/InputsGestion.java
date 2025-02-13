@@ -5,34 +5,30 @@ import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.CameraNode;
-import com.jme3.scene.control.CameraControl;
+import com.jme3.scene.Node;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesDisplay;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesInformation.CelestialBodiesInformation;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodsiesOrbitalRepresentation.OrbitalsRepresentation;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesNode.NodesCreation;
-
 import java.util.Map;
 
 public class InputsGestion {
-    private final InputManager inputsManager;
     private static boolean pause = false;
     private static boolean show = true;
-    private static float flowOftime = 1;
-    private static Camera camera;
+    private static float flowOfTime = 1;
     private static int camNumber = 1;
     private static CameraNode camNode;
     private static final NodesCreation node = CelestialBodiesDisplay.getNodeDisplay();
-    private static Map<String, CelestialBodiesInformation> celestialBodiesMap= CelestialBodiesInformation.getCelestialBodiesMap();
+    private static final Map<String, CelestialBodiesInformation> celestialBodiesMap= CelestialBodiesInformation.getCelestialBodiesMap();
     private static CelestialBodiesInformation bodyInView = celestialBodiesMap.get("sun");
     private static InfoInterfaceUser bodyInfoInterface;
 
 
     public InputsGestion(InputManager inputsManager, Camera cam, InfoInterfaceUser celestialBodyInfoInterface) {
-        this.inputsManager = inputsManager;
-        camera = cam;
         bodyInfoInterface = celestialBodyInfoInterface;
 
 
@@ -53,21 +49,21 @@ public class InputsGestion {
     private final AnalogListener analogListener = new AnalogListener() {
         public void onAnalog(String name, float keyPressed, float tpf) {
             if (name.equals("Rewind")) {
-                if (flowOftime < 5e-2f && flowOftime > 0) {
-                    flowOftime = -flowOftime;
-                } else if (flowOftime > 5e-2f) {
-                    flowOftime *= 0.9f;
+                if (flowOfTime < 5e-2f && flowOfTime > 0) {
+                    flowOfTime = -flowOfTime;
+                } else if (flowOfTime > 5e-2f) {
+                    flowOfTime *= 0.9f;
                 } else {
-                    flowOftime *= 1.1f;
+                    flowOfTime *= 1.1f;
                 }
             }
             if (name.equals("Forward")) {
-                if (flowOftime < -5e-2f) {
-                    flowOftime *= 0.9f;
-                } else if (flowOftime > -5e-2f && flowOftime < 0) {
-                    flowOftime = -flowOftime;
+                if (flowOfTime < -5e-2f) {
+                    flowOfTime *= 0.9f;
+                } else if (flowOfTime > -5e-2f && flowOfTime < 0) {
+                    flowOfTime = -flowOfTime;
                 } else {
-                    flowOftime *= 1.1f;
+                    flowOfTime *= 1.1f;
                 }
             }
 
@@ -139,21 +135,27 @@ public class InputsGestion {
     }
 
     public static void updateCameraPosition() {
-        Vector3f position = bodyInView.getCelestialBody().getLocalTranslation();
-
+        float angle = bodyInView.getAngle();
+        float epsilon = 1.25f;
 
         if (bodyInView.getName().equals("sun")) {
-            camNode.setLocalTranslation(position.add(new Vector3f(0, 50, 100)));
+            camNode.setLocalTranslation(new Vector3f(0, 30, 50));;
+
+        } else if ( !bodyInView.getName().equals("moon")) {
+            camNode.setLocalTranslation( bodyInView.calculatePosition(angle).add(epsilon*FastMath.cos(angle), 2, epsilon*FastMath.sin(angle)));
         } else {
-            camNode.setLocalTranslation( position.add(1, 2, 0) );
+            Node bodyNode = node.getNode(bodyInView.getName());
+            camNode.setLocalTranslation( bodyNode.getParent().getLocalTranslation().add(epsilon*FastMath.cos(angle), 2, epsilon*FastMath.sin(angle)));
         }
     }
+
+
 
     public static boolean getPauseState() {
         return pause;
     }
 
     public static float getFlowOfTime() {
-        return flowOftime;
+        return flowOfTime;
     }
 }

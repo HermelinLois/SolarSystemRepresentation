@@ -24,7 +24,7 @@ public class OrbitalsRepresentation {
         Vector3f[] points = new Vector3f[numberOfPoints];
 
         for (int i = 0 ; i < numberOfPoints ; i ++){
-            float angle = 2 * FastMath.PI * i / (numberOfPoints-1);
+            float angle = FastMath.TWO_PI * i / (numberOfPoints-1);
             points[i] = celestialBody.calculatePosition(angle);
         }
         return points;

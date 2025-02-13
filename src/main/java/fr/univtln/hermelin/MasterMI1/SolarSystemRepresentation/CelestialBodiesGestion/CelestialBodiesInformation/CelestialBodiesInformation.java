@@ -30,8 +30,9 @@ public class CelestialBodiesInformation {
     private final float inclination;
     private final Geometry celestialBody;
     private Mesh meshUsed;
+    private float angle;
 
-    protected CelestialBodiesInformation(String name, float radius, float weight, float eccentricity, float orbitalRotationTime, float SelfRotationSpeed, float semiMajorAxis, float inclination) {
+    public CelestialBodiesInformation(String name, float radius, float weight, float eccentricity, float orbitalRotationTime, float SelfRotationSpeed, float semiMajorAxis, float inclination) {
         this.name = name;
         this.radius = radius;
         this.weight = weight;
@@ -106,5 +107,13 @@ public class CelestialBodiesInformation {
 
     public static Map<String,CelestialBodiesInformation> getCelestialBodiesMap(){
         return  celestialBodiesInformationMap;
+    }
+
+    public void setAngle(float angle){
+        this.angle = angle;
+    }
+
+    public float getAngle(){
+        return angle;
     }
 }

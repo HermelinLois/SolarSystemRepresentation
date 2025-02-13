@@ -31,30 +31,61 @@ public class InfoInterfaceUser extends BaseAppState implements ScreenController 
         nifty.loadStyleFile("nifty-default-styles.xml");
         nifty.loadControlFile("nifty-default-controls.xml");
 
-        nifty.addScreen("planetInfo", new ScreenBuilder("planetInfo") {{
+        Screen screen = new ScreenBuilder("planetInfo") {{
             controller(new DefaultScreenController());
 
+            //gere la couche des fentres
             layer(new de.lessvoid.nifty.builder.LayerBuilder("background") {{
-                childLayoutVertical();
+                childLayoutAbsolute();
 
-                text(new de.lessvoid.nifty.builder.TextBuilder() {{
-                    text("Information of the celestial body");
-                    font("Interface/Fonts/Default.fnt");
-                    width("100%");
-                    height("10%");
-                }});
+                //construction de la fenetre d'information à gauche
+                panel(new de.lessvoid.nifty.builder.PanelBuilder("infoPanel") {{
+                    width("400px");
+                    height("300px");
+                    x("20px");
+                    y("50px");
+                    padding("10px");
+                    childLayoutVertical();
 
-                control(new LabelBuilder("CelestialBodyName", "Name : to update") {{
-                    width("100%");
-                }});
-                control(new LabelBuilder("CelestialBodyWeight", "Weight : to update") {{
-                    width("100%");
-                }});
-                control(new LabelBuilder("CelestialBodyRadius", "Radius : to update") {{
-                    width("100%");
+                    text(new de.lessvoid.nifty.builder.TextBuilder() {{
+                        text("Information of the Celestial Body");
+                        font("Interface/Fonts/Default.fnt");
+                        width("100%");
+                        height("10%");
+                        color("#00FFFF");
+                        textHAlignCenter();
+                    }});
+
+                    //construction du display des informations
+                    control(new LabelBuilder("CelestialBodyName", "Name : to update") {{
+                        font("Interface/Fonts/Default.fnt");
+                        width("100%");
+                        padding("5px");
+                        backgroundColor("#222222AA");
+                        color("#00FFFF");
+                        textHAlignLeft();
+                    }});
+
+                    control(new LabelBuilder("CelestialBodyWeight", "Weight : to update") {{
+                        font("Interface/Fonts/Default.fnt");
+                        width("100%");
+                        padding("5px");
+                        backgroundColor("#222222AA");
+                        color("#00FFFF");
+                        textHAlignLeft();
+                    }});
+
+                    control(new LabelBuilder("CelestialBodyRadius", "Radius : to update") {{
+                        font("Interface/Fonts/Default.fnt");
+                        width("100%");
+                        padding("5px");
+                        backgroundColor("#222222AA");
+                        color("#00FFFF");
+                        textHAlignLeft();
+                    }});
                 }});
             }});
-        }}.build(nifty));
+        }}.build(nifty);
 
         nifty.gotoScreen("empty");
     }
