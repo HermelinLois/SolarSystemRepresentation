@@ -90,7 +90,6 @@ public class NodesCreation {
 
     //get the node
     public Node getNode(String name) {
-        System.out.println(" ... name getNode: " + name);
         switch (name) {
             case "moon" -> {
                 return moonNode;

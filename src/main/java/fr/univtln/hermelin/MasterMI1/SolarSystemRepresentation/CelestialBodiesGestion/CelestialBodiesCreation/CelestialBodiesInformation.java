@@ -17,7 +17,7 @@ public class CelestialBodiesInformation {
     private final float sideralRotation;
     private final String pathToTexture;
     private final String bodyType;
-    private final float siderealOrbit;
+    private final float sideralOrbit;
     private final float semiMajorAxis;
     private final float inclination;
     private final Geometry celestialBody;
@@ -31,14 +31,14 @@ public class CelestialBodiesInformation {
         if(name.equals("sun")){
             this.radius = radius/800_00f;
         } else {
-            this.radius = radius/100_000f;
+            this.radius = radius/10_000f;
         }
 
 
-        this.sideralRotation = sideralRotation*24*60*60; //in seconds
+        this.sideralOrbit = sideralOrbit*24*60*60; //in seconds
         this.bodyType = bodyType;
-        this.semiMajorAxis = semimajorAxis/800_000f;
-        this.siderealOrbit = sideralOrbit*60*60; //in seconds
+        this.semiMajorAxis = semimajorAxis/10_000_000f;
+        this.sideralRotation = sideralRotation*60*60; //in seconds
         this.inclination = inclination;
         this.pathToTexture = "Textures/" + name+".jpg";
         this.eccentricity = eccen;
@@ -68,7 +68,7 @@ public class CelestialBodiesInformation {
     }
 
     public float getOrbitalRotationTime() {
-        return siderealOrbit;
+        return sideralOrbit;
     }
 
     public float getSelfRotationSpeed() {

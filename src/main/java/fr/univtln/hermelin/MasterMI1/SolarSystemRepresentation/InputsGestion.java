@@ -8,7 +8,6 @@ import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.CameraNode;
-import com.jme3.scene.Node;
 
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesDisplay;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation.CelestialBodiesInformation;
@@ -108,8 +107,8 @@ public class InputsGestion {
     public static void updateCamera() {
         if(!rotating){
             updateCameraOrientation();
+            updateCameraPosition();
         }
-        updateCameraPosition();
     }
 
     private static void updateCameraOrientation() {
@@ -125,7 +124,7 @@ public class InputsGestion {
             camNode.setLocalTranslation(new Vector3f(0, 30, 50));
 
         } else {
-            camNode.setLocalTranslation(bodyPosition.add(distance * FastMath.cos(angle), 0.5f, distance * FastMath.sin(angle)));
+            camNode.setLocalTranslation(bodyPosition.add(distance * FastMath.cos(angle), 0f, distance * FastMath.sin(angle)));
         }
     }
 
@@ -148,8 +147,21 @@ public class InputsGestion {
         return flowOfTime;
     }
 
-    public void rotateAroundPlanet(Vector2f mouseDelta) {
-        float xAngle = mouseDelta.x * 0.01f;
-        float yAngle = mouseDelta.y * 0.01f;
+    private void rotateAroundPlanet(Vector2f mouseDelta) {
+        float sensitivity = 0.01f;
+        float angleX = mouseDelta.x * sensitivity;
+
+        float distanceFromPlanet = bodyInView.getRadius() ;
+
+        //get the position of the body in the space
+        Vector3f bodyPosition = bodyInView.calculatePosition(bodyInView.getAngle());
+
+
+        Vector3f xRotation = new Vector3f(FastMath.cos(angleX), 0, FastMath.sin(angleX)).mult(distanceFromPlanet);
+        camNode.setLocalTranslation(bodyPosition.add(xRotation));
+
+        camNode.lookAt(bodyPosition, Vector3f.UNIT_Y);
+        System.out.println("body = " + bodyInView.getName());
+        System.out.println("bodyPosition = " + bodyPosition);
     }
 }

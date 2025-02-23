@@ -22,7 +22,7 @@ public class Main extends SimpleApplication {
     public void simpleInitApp() {
         //deactivate the flyCam
         cam.setLocation(new Vector3f(10, 10, 10));
-        cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
+        //cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
 
         //display the celestial bodies
         CelestialBodiesDisplay.display(this);
