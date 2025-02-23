@@ -47,7 +47,6 @@ public class OrbitalsRepresentation {
             orbit.setMesh(orbitMesh);
 
             //link the curve to the solar system
-
             node.getNode(celestialBody.getName()).getParent().attachChild(orbit);
             celestialBody.setEllipticCurve(orbitMesh);
 
@@ -59,7 +58,7 @@ public class OrbitalsRepresentation {
     private static void showOrbitalRepresentation(CelestialBodiesInformation celestialBody, boolean show){
         if (show){
             Mesh orbitMesh = celestialBody.getEllipticCurve();
-            Vector3f[] points = createPoints(celestialBody, 200);
+            Vector3f[] points = createPoints(celestialBody, 300);
             orbitMesh.setBuffer(VertexBuffer.Type.Position, 3, BufferUtils.createFloatBuffer(points));
             orbitMesh.updateBound();
 

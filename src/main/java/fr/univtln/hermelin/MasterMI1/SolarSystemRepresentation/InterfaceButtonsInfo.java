@@ -37,7 +37,7 @@ public class InterfaceButtonsInfo {
 
         //preload the first body
         name.setText("Information about : " + celestialBodiesList.get(0).getName());
-        //weight.setText("Weight : " + celestialBodiesList.get(0).getWeight());
+        weight.setText("Weight : " + celestialBodiesList.get(0).getWeight());
         radius.setText("Radius : " + celestialBodiesList.get(0).getRadius()*150_000f);
         type.setText("Type : " + celestialBodiesList.get(0).getBodyType());
 
@@ -59,7 +59,7 @@ public class InterfaceButtonsInfo {
             CelestialBodiesInformation bodyInView = InputsGestion.switchBody();
 
             name.setText("Information about : " + bodyInView.getName());
-            //weight.setText("Weight : " + bodyInView.getWeight());
+            weight.setText("Weight : " + bodyInView.getWeight());
 
             if (bodyInView.getName().equals("sun")) {
                 radius.setText("Radius : " + bodyInView.getRadius()*800_00f);

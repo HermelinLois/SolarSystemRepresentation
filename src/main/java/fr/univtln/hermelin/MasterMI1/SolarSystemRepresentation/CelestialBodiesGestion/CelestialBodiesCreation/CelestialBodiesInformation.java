@@ -24,12 +24,13 @@ public class CelestialBodiesInformation {
     private Mesh meshUsed;
     private float angle;
     private final float eccentricity;
+    private final float weight;
 
-    protected CelestialBodiesInformation(String name, float radius, float sideralRotation, String bodyType, float semimajorAxis, float sideralOrbit, float inclination, float eccen) {
+    protected CelestialBodiesInformation(String name, float radius, float sideralRotation, String bodyType, float semimajorAxis, float sideralOrbit, float inclination, float eccen, float weight) {
         this.name = name;
 
         if(name.equals("sun")){
-            this.radius = radius/800_00f;
+            this.radius = radius/200_00f;
         } else {
             this.radius = radius/10_000f;
         }
@@ -37,11 +38,12 @@ public class CelestialBodiesInformation {
 
         this.sideralOrbit = sideralOrbit*24*60*60; //in seconds
         this.bodyType = bodyType;
-        this.semiMajorAxis = semimajorAxis/10_000_000f;
+        this.semiMajorAxis = semimajorAxis/250_000f;
         this.sideralRotation = sideralRotation*60*60; //in seconds
         this.inclination = inclination;
         this.pathToTexture = "Textures/" + name+".jpg";
         this.eccentricity = eccen;
+        this.weight = weight;
 
         //create the celestial body in the scene
         CelestialBodiesCreation creator = new CelestialBodiesCreation();
@@ -111,6 +113,10 @@ public class CelestialBodiesInformation {
 
     public float getAngle(){
         return angle;
+    }
+
+    public float getWeight(){
+        return weight;
     }
 
     public float getEccentricity(){

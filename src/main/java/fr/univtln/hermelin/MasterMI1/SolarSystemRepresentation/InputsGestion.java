@@ -79,9 +79,11 @@ public class InputsGestion {
             }
 
             if (name.equals("RightClick")) {
+                if (mousePosition != null) {
                 Vector2f mousePositionNow = inputManager.getCursorPosition();
                 Vector2f mouseDelta = mousePositionNow.subtract(mousePosition);
                 rotateAroundPlanet(mouseDelta);
+                }
             }
         }
     };
@@ -117,14 +119,14 @@ public class InputsGestion {
 
     private static void updateCameraPosition() {
         float angle = bodyInView.getAngle();
-        float distance = 2f;
+        float distance = 2f*bodyInView.getRadius();
         Vector3f bodyPosition = bodyInView.getCelestialBody().getLocalTranslation();
 
         if (bodyInView.getName().equals("sun")) {
             camNode.setLocalTranslation(new Vector3f(0, 30, 50));
 
         } else {
-            camNode.setLocalTranslation(bodyPosition.add(distance * FastMath.cos(angle), 0f, distance * FastMath.sin(angle)));
+            camNode.setLocalTranslation(bodyPosition.add(distance * FastMath.cos(angle)+1f, 0.5f, distance * FastMath.sin(angle)));
         }
     }
 
@@ -151,11 +153,9 @@ public class InputsGestion {
         float sensitivity = 0.01f;
         float angleX = mouseDelta.x * sensitivity;
 
-        float distanceFromPlanet = bodyInView.getRadius() ;
-
         //get the position of the body in the space
         Vector3f bodyPosition = bodyInView.calculatePosition(bodyInView.getAngle());
-
+        float distanceFromPlanet = 3*bodyInView.getRadius();
 
         Vector3f xRotation = new Vector3f(FastMath.cos(angleX), 0, FastMath.sin(angleX)).mult(distanceFromPlanet);
         camNode.setLocalTranslation(bodyPosition.add(xRotation));

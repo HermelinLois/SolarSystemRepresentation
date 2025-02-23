@@ -31,11 +31,8 @@ public class BodiesGenerator {
             float eccentricity = body.has("eccentricity") ? body.get("eccentricity").floatValue() : 0.0f;
             float weight = body.has("mass") ? body.get("mass").floatValue() : 0.0f;
             String aroundPlanet = body.get("aroundPlanet").has("planet")? body.get("aroundPlanet").get("planet").asText().toLowerCase() : null;
-            if(name.equals("sun")||name.equals("earth")||name.equals("moon")){ {
-                System.out.println("Radius: " + radius+" "+name+" "+sideralRotation+" "+bodyType+" "+semimajorAxis+" "+sideralOrbit+" "+inclination+" "+eccentricity+" "+aroundPlanet+" "+weight);
-                new CelestialBodiesInformation(name, radius, sideralRotation, bodyType, semimajorAxis, sideralOrbit, inclination, eccentricity);
-            }
-        }
+
+            new CelestialBodiesInformation(name, radius, sideralRotation, bodyType, semimajorAxis, sideralOrbit, inclination, eccentricity, weight);
         }
     }
 }

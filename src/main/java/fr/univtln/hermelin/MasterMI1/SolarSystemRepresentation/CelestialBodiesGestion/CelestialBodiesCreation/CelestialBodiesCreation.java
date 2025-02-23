@@ -60,7 +60,7 @@ public class CelestialBodiesCreation {
         celestialBody.setMaterial(celestialBodyMat);
 
         //axed well in the space
-        //celestialBody.rotate( -FastMath.PI/2 + FastMath.DEG_TO_RAD*celestialElement.getAxialTilt(), 0, 0 );
+        celestialBody.rotate( -FastMath.PI/2 + FastMath.DEG_TO_RAD*celestialElement.getInclination(), 0, 0 );
         return celestialBody;
     }
 

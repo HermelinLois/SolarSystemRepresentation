@@ -22,7 +22,8 @@ public class Main extends SimpleApplication {
     public void simpleInitApp() {
         //deactivate the flyCam
         cam.setLocation(new Vector3f(10, 10, 10));
-        //cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
+        cam.setFrustumPerspective(90f, (float) cam.getWidth() / cam.getHeight(), 0.1f, 20_000f);
+
 
         //display the celestial bodies
         CelestialBodiesDisplay.display(this);
