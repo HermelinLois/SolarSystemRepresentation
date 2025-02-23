@@ -24,21 +24,38 @@ public class NodesCreation {
     private final Node venusNode;
     private final Node uranusNode;
     private final Node neptuneNode;
+    private final Node phobosNode;
+    private final Node deimosNode;
+    private final Node ioNode;
+    private final Node europaNode;
 
     //private constructor
     private NodesCreation(SimpleApplication app) {
         //solar system root node
         solarSystemRootNode = app.getRootNode();
         sunNode = new Node("sunNode");
-        earthNode = new Node("earthNode");
-        marsNode = new Node("marsNode");
-        moonNode = new Node("moonNode");
-        saturnNode = new Node("saturnNode");
+
         mercuryNode = new Node("mercuryNode");
-        jupiterNode = new Node("jupiterNode");
+
         venusNode = new Node("venusNode");
+
+        earthNode = new Node("earthNode");
+        moonNode = new Node("moonNode");
+
+        marsNode = new Node("marsNode");
+        phobosNode = new Node("phobosNode");
+        deimosNode = new Node("deimosNode");
+
+        jupiterNode = new Node("jupiterNode");
+        ioNode = new Node("ioNode");
+        europaNode = new Node("europaNode");
+
+        saturnNode = new Node("saturnNode");
+
         uranusNode = new Node("uranusNode");
+
         neptuneNode = new Node("neptuneNod");
+
 
 
         //link the nodes
@@ -46,6 +63,12 @@ public class NodesCreation {
 
         sunNode.attachChild(earthNode);
         earthNode.attachChild(moonNode);
+
+        marsNode.attachChild(phobosNode);
+        marsNode.attachChild(deimosNode);
+
+        jupiterNode.attachChild(ioNode);
+        jupiterNode.attachChild(europaNode);
 
         sunNode.attachChild(jupiterNode);
 
@@ -123,6 +146,18 @@ public class NodesCreation {
             }
             case "neptune" -> {
                 return neptuneNode;
+            }
+            case "phobos" -> {
+                return phobosNode;
+            }
+            case "deimos" -> {
+                return deimosNode;
+            }
+            case "io" -> {
+                return ioNode;
+            }
+            case "europa" -> {
+                return europaNode;
             }
             default -> {
                 throw new IllegalArgumentException(" ... miss match node :( ... " + name);

@@ -1,10 +1,11 @@
 package fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation;
 
+import com.jme3.material.RenderState;
+import com.jme3.scene.*;
 import org.jetbrains.annotations.NotNull;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
-import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
@@ -12,9 +13,6 @@ import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.BloomFilter;
 import com.jme3.renderer.queue.RenderQueue;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.Mesh;
-import com.jme3.scene.VertexBuffer;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.texture.Texture;
 import com.jme3.util.BufferUtils;
@@ -29,9 +27,12 @@ public class CelestialBodiesCreation {
 
     //display the celestial body
     public Geometry createBody(@NotNull CelestialBodiesInformation celestialElement){
+
         Sphere celestialBodyMesh = new Sphere(30, 30, celestialElement.getRadius());
         Geometry celestialBody = new Geometry(celestialElement.getName(), celestialBodyMesh);
         celestialBody.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+
+
 
         //celestialBody's skin
         celestialBodyMesh.setTextureMode( Sphere.TextureMode.Projected );
@@ -56,6 +57,11 @@ public class CelestialBodiesCreation {
             celestialBodyMat.setColor("Specular", ColorRGBA.White.mult(0.5f));
             celestialBodyMat.setBoolean("UseMaterialColors", true);
             celestialBodyMat.setTexture("DiffuseMap", celestialBodyTexture);
+
+            if (celestialElement.getName().equals("saturn")) {
+               createRing(celestialElement, 100);
+            }
+
         }
         celestialBody.setMaterial(celestialBodyMat);
 
@@ -65,48 +71,55 @@ public class CelestialBodiesCreation {
     }
 
     public void createRing(CelestialBodiesInformation celestialElement, int segments) {
-        Vector3f[] vertices = new Vector3f[2*segments];
-        Vector2f[] texCoord = new Vector2f[2*segments];
-        int[] indexes = new int[2*segments];
-
         float innerRadius = celestialElement.getRadius() * 1.5f;
         float outerRadius = celestialElement.getRadius() * 2.5f;
 
+        Vector3f[] vertices = new Vector3f[segments * 2];
+        Vector2f[] texCoord = new Vector2f[segments * 2];
+        int[] indexes = new int[segments * 6];
+
         for (int i = 0; i < segments; i++) {
             float angle = FastMath.TWO_PI * i / segments;
-            float xInner = innerRadius * FastMath.cos(angle);
-            float zInner = innerRadius * FastMath.sin(angle);
-            float xOuter = outerRadius * FastMath.cos(angle);
-            float zOuter = outerRadius * FastMath.sin(angle);
 
-            //create the vertices of the ring with the inner and outer radius by alternating them
-            vertices[2*i] = new Vector3f(xInner, 0, zInner);
-            vertices[2*i + 1] = new Vector3f(xOuter, 0, zOuter);
+            // Create max and min bounds
+            vertices[i * 2] = new Vector3f(innerRadius * FastMath.cos(angle), 0, innerRadius * FastMath.sin(angle));
+            vertices[i * 2 + 1] = new Vector3f(outerRadius * FastMath.cos(angle), 0, outerRadius * FastMath.sin(angle));
 
-            //create the texture coordinates
-            texCoord[2 * i] = new Vector2f((float) i / segments, 0);
-            texCoord[2 * i + 1] = new Vector2f((float) i / segments, 1);
-
-            //create the indexes
-            indexes[i] = i;
+            // Texture coordinates
+            texCoord[i * 2] = new Vector2f(angle / FastMath.TWO_PI, 0); // Inner
+            texCoord[i * 2 + 1] = new Vector2f(angle / FastMath.TWO_PI, 1); // Outer
         }
 
-        //create the mesh with the vertices
+        for (int i = 0; i < segments; i++) {
+            int nextIndex = (i + 1) % segments;
+            indexes[i * 6] = i * 2;
+            indexes[i * 6 + 1] = i * 2 + 1;
+            indexes[i * 6 + 2] = nextIndex * 2;
+            indexes[i * 6 + 3] = nextIndex * 2;
+            indexes[i * 6 + 4] = i * 2 + 1;
+            indexes[i * 6 + 5] = nextIndex * 2 + 1;
+        }
+
         Mesh ringMesh = new Mesh();
-        ringMesh.setMode(Mesh.Mode.LineStrip);
+        ringMesh.setMode(Mesh.Mode.Triangles);
         ringMesh.setBuffer(VertexBuffer.Type.Position, 3, BufferUtils.createFloatBuffer(vertices));
         ringMesh.setBuffer(VertexBuffer.Type.TexCoord, 2, BufferUtils.createFloatBuffer(texCoord));
-        ringMesh.setBuffer(VertexBuffer.Type.Index,    3, BufferUtils.createIntBuffer(indexes));
+        ringMesh.setBuffer(VertexBuffer.Type.Index, 3, BufferUtils.createIntBuffer(indexes));
         ringMesh.updateBound();
+        ringMesh.setStatic();
 
-
-        //create the geometry with the mesh and set the material
         Geometry ring = new Geometry("ring of " + celestialElement.getName(), ringMesh);
         Material ringMat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        ringMat.setTexture("ColorMap", assetManager.loadTexture("Textures/saturnRing.jpg"));
+
+        Texture ringTexture = assetManager.loadTexture("Textures/saturnRing.jpg");
+        ringTexture.setWrap(Texture.WrapMode.Repeat);
+        ringMat.setTexture("ColorMap", ringTexture);
+
+        ringMat.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
+        ringMat.getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Off);
+        ring.setQueueBucket(RenderQueue.Bucket.Transparent);
         ring.setMaterial(ringMat);
 
-        //link the ring to the celestial body
         node.getNode(celestialElement.getName()).attachChild(ring);
     }
 }

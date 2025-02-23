@@ -21,7 +21,6 @@ public class CelestialBodiesDisplay {
     private static AssetManager assetManager;
     private static NodesCreation node;
     private final static Map<String, CelestialBodiesInformation> celestialBodiesInformationMap = CelestialBodiesInformation.getCelestialBodiesMap();
-    private static final List<CelestialBodiesInformation> celestialBodiesInformationList = CelestialBodiesInformation.getCelestialBodiesList();
 
     public static void display(SimpleApplication application) {
         app = application;
@@ -30,8 +29,6 @@ public class CelestialBodiesDisplay {
 
         BodiesGenerator generator = new BodiesGenerator();
         generator.generateBodies();
-        System.out.println("Celestial bodies generated ; "+celestialBodiesInformationMap);
-
 
         for (CelestialBodiesInformation celestialBody : celestialBodiesInformationMap.values()) {
             node.linkBodyToSolarSystem(celestialBody);

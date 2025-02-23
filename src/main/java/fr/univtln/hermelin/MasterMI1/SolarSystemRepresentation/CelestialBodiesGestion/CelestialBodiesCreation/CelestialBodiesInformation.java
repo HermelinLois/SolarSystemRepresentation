@@ -25,6 +25,7 @@ public class CelestialBodiesInformation {
     private float angle;
     private final float eccentricity;
     private final float weight;
+    private final String pathToModel;
 
     protected CelestialBodiesInformation(String name, float radius, float sideralRotation, String bodyType, float semimajorAxis, float sideralOrbit, float inclination, float eccen, float weight) {
         this.name = name;
@@ -41,7 +42,8 @@ public class CelestialBodiesInformation {
         this.semiMajorAxis = semimajorAxis/250_000f;
         this.sideralRotation = sideralRotation*60*60; //in seconds
         this.inclination = inclination;
-        this.pathToTexture = "Textures/" + name+".jpg";
+        this.pathToTexture = "Textures/" + name + ".jpg";
+        this.pathToModel = "Models/" + name + "3D.stl";
         this.eccentricity = eccen;
         this.weight = weight;
 
@@ -121,5 +123,9 @@ public class CelestialBodiesInformation {
 
     public float getEccentricity(){
         return eccentricity;
+    }
+
+    public String getPathToModel(){
+        return pathToModel;
     }
 }
