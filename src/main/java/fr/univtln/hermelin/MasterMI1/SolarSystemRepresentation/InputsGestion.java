@@ -2,130 +2,154 @@ package fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation;
 
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
-import com.jme3.input.controls.ActionListener;
-import com.jme3.input.controls.AnalogListener;
-import com.jme3.input.controls.KeyTrigger;
+import com.jme3.input.controls.*;
 import com.jme3.math.FastMath;
+import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
+
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesDisplay;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation.CelestialBodiesInformation;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodsiesOrbitalRepresentation.OrbitalsRepresentation;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesNode.NodesCreation;
+
 import java.util.List;
 import java.util.Map;
 
+import com.jme3.input.MouseInput;
+
 public class InputsGestion {
+
     private static boolean pause = false;
     private static boolean show = true;
-    private static float flowOfTime = 1;
-    private static int camNumber = 1;
+    private static double flowOfTime = 1;
+    private static int camNumber = 0;
+    private static Vector2f mousePosition = new Vector2f();
+    private static InputManager inputManager;
+    private static boolean rotating = false;
+    private static Camera camera;
+
     private static CameraNode camNode;
     private static final NodesCreation node = CelestialBodiesDisplay.getNodeDisplay();
-    private static final Map<String, CelestialBodiesInformation> celestialBodiesMap= CelestialBodiesInformation.getCelestialBodiesMap();
-    private static final List<CelestialBodiesInformation> celestialBodiesList = CelestialBodiesInformation.getCelestialBodiesList(); ;
+    private static final Map<String, CelestialBodiesInformation> celestialBodiesMap = CelestialBodiesInformation.getCelestialBodiesMap();
+    private static final List<CelestialBodiesInformation> celestialBodiesList = CelestialBodiesInformation.getCelestialBodiesList();
+    ;
 
     private static CelestialBodiesInformation bodyInView = celestialBodiesMap.get("sun");
-    private static InfoInterfaceUser bodyInfoInterface;
 
+    public InputsGestion(InputManager inputsManager, Camera cam) {
+        inputManager = inputsManager;
+        camera = cam;
 
-    public InputsGestion(InputManager inputsManager, Camera cam, InfoInterfaceUser celestialBodyInfoInterface) {
-        bodyInfoInterface = celestialBodyInfoInterface;
-
-
-        inputsManager.addMapping("Pause", new KeyTrigger(KeyInput.KEY_SPACE));
         inputsManager.addMapping("Rewind", new KeyTrigger(KeyInput.KEY_R));
         inputsManager.addMapping("Forward", new KeyTrigger(KeyInput.KEY_F));
         inputsManager.addMapping("Show", new KeyTrigger(KeyInput.KEY_F1));
-        inputsManager.addMapping("Switch", new KeyTrigger(KeyInput.KEY_TAB));
-        inputsManager.addMapping("ShowInformation", new KeyTrigger(KeyInput.KEY_I));
+        inputsManager.addMapping("RightClick", new MouseButtonTrigger(MouseInput.BUTTON_RIGHT));
+        inputsManager.addMapping("MouseMoveX", new MouseAxisTrigger(MouseInput.AXIS_X, false));
+        inputsManager.addMapping("MouseMoveY", new MouseAxisTrigger(MouseInput.AXIS_Y, false));
 
-        inputsManager.addListener(analogListener, new String[]{"Rewind", "Forward"});
-        inputsManager.addListener(actionListener, new String[]{"Pause", "Show", "Switch", "ShowInformation"});
+        inputsManager.addListener(analogListener, new String[]{"Rewind", "Forward", "RightClick"});
+        inputsManager.addListener(actionListener, new String[]{"Show", "RightClick"});
 
         camNode = new CameraNode("camNode", cam);
         node.getNode("root").attachChild(camNode);
     }
 
     private final AnalogListener analogListener = new AnalogListener() {
+        @Override
         public void onAnalog(String name, float keyPressed, float tpf) {
             if (name.equals("Rewind")) {
-                if (flowOfTime < 5e-2f && flowOfTime > 0) {
+                if (flowOfTime < 1f && flowOfTime > 0) {
                     flowOfTime = -flowOfTime;
-                } else if (flowOfTime > 5e-2f) {
-                    flowOfTime *= 0.9f;
+                } else if (flowOfTime > 1f) {
+                    flowOfTime *= 0.8f;
                 } else {
-                    flowOfTime *= 1.1f;
+                    flowOfTime *= 1.2f;
                 }
             }
             if (name.equals("Forward")) {
-                if (flowOfTime < -5e-2f) {
-                    flowOfTime *= 0.9f;
-                } else if (flowOfTime > -5e-2f && flowOfTime < 0) {
+                if (flowOfTime < -1f) {
+                    flowOfTime *= 0.8f;
+                } else if (flowOfTime > -1f && flowOfTime < 0) {
                     flowOfTime = -flowOfTime;
                 } else {
-                    flowOfTime *= 1.1f;
+                    flowOfTime *= 1.2f;
                 }
             }
 
+            if (name.equals("RightClick")) {
+                Vector2f mousePositionNow = inputManager.getCursorPosition();
+                Vector2f mouseDelta = mousePositionNow.subtract(mousePosition);
+                rotateAroundPlanet(mouseDelta);
+            }
         }
     };
 
     private final ActionListener actionListener = new ActionListener() {
+        @Override
         public void onAction(String name, boolean isPressed, float tpf) {
-            if (name.equals("Pause") && isPressed) {
-                pause = !pause;
-            }
 
             if (name.equals("Show") && isPressed) {
                 show = !show;
                 OrbitalsRepresentation.showCelestialBodiesOrbitals(show);
             }
-
-            if (name.equals("Switch") && isPressed) {
-                camNumber = (camNumber + 1) % celestialBodiesList.size();
-                bodyInView = celestialBodiesList.get(camNumber);
-                bodyInfoInterface.updatePlanetInfo(bodyInView);
-                node.getNode(bodyInView.getName()).attachChild(camNode);
+            if (name.equals("RightClick") && isPressed) {
+                rotating = true;
+                mousePosition = inputManager.getCursorPosition().clone();
             }
-
-            if (name.equals("ShowInformation")) {
-                if (isPressed) {
-                    bodyInfoInterface.showInfo();
-                }
-                bodyInfoInterface.updatePlanetInfo(bodyInView);
+            if (name.equals("RightClick") && !isPressed) {
+                rotating = false;
             }
         }
     };
 
-    public static void updateCameraOrientation() {
+    public static void updateCamera() {
+        if(!rotating){
+            updateCameraOrientation();
+        }
+        updateCameraPosition();
+    }
+
+    private static void updateCameraOrientation() {
         camNode.lookAt(celestialBodiesMap.get("sun").getCelestialBody().getLocalTranslation(), Vector3f.UNIT_Y);
     }
 
-    public static void updateCameraPosition() {
+    private static void updateCameraPosition() {
         float angle = bodyInView.getAngle();
-        float epsilon = 1.1f;
+        float distance = 2f;
+        Vector3f bodyPosition = bodyInView.getCelestialBody().getLocalTranslation();
 
         if (bodyInView.getName().equals("sun")) {
-            camNode.setLocalTranslation(new Vector3f(0, 30, 50));;
+            camNode.setLocalTranslation(new Vector3f(0, 30, 50));
 
-        } else if ( !bodyInView.getName().equals("moon")) {
-            camNode.setLocalTranslation( bodyInView.calculatePosition(angle).add(epsilon*FastMath.cos(angle), 2, epsilon*FastMath.sin(angle)));
         } else {
-            Node bodyNode = node.getNode(bodyInView.getName());
-            camNode.setLocalTranslation( bodyNode.getParent().getLocalTranslation().add(epsilon*FastMath.cos(angle), 2, epsilon*FastMath.sin(angle)));
+            camNode.setLocalTranslation(bodyPosition.add(distance * FastMath.cos(angle), 0, distance * FastMath.sin(angle)));
         }
     }
 
-
+    public static CelestialBodiesInformation switchBody() {
+        camNumber = (camNumber + 1) % celestialBodiesList.size();
+        bodyInView = celestialBodiesList.get(camNumber);
+        node.getNode(bodyInView.getName()).attachChild(camNode);
+        return bodyInView;
+    }
 
     public static boolean getPauseState() {
         return pause;
     }
 
-    public static float getFlowOfTime() {
+    public static void stop(){
+        pause =!pause;
+    }
+
+    public static double getFlowOfTime() {
         return flowOfTime;
+    }
+
+    public void rotateAroundPlanet(Vector2f mouseDelta) {
+        float xAngle = mouseDelta.x * 0.01f;
+        float yAngle = mouseDelta.y * 0.01f;
     }
 }

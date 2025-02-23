@@ -1,7 +1,10 @@
 package fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion;
 
+import java.util.Map;
+
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
+
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation.BodiesGenerator;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation.CelestialBodiesInformation;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesNode.NodesCreation;
@@ -10,48 +13,45 @@ import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGe
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.LightSources.LightSources;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.InputsGestion;
 
-import java.util.Map;
-import java.util.Objects;
-
 public class CelestialBodiesDisplay {
+
     private static SimpleApplication app;
     private static AssetManager assetManager;
     private static NodesCreation node;
     private final static Map<String, CelestialBodiesInformation> celestialBodiesInformationMap = CelestialBodiesInformation.getCelestialBodiesMap();
 
-
-    public static void display(SimpleApplication application){
+    public static void display(SimpleApplication application) {
         app = application;
         assetManager = app.getAssetManager();
         node = NodesCreation.createNodes(app);
 
         BodiesGenerator generator = new BodiesGenerator();
         generator.generateBodies();
+        System.out.println("Celestial bodies generated ; "+celestialBodiesInformationMap);
 
         for (CelestialBodiesInformation celestialBody : celestialBodiesInformationMap.values()) {
-            node.linkBodyToSolarSystem(celestialBody.getCelestialBody());
+            node.linkBodyToSolarSystem(celestialBody);
         }
-
         OrbitalsRepresentation.initOrbitalRepresentations();
-        node.addSpaceAround(assetManager);
-        LightSources.addLightSource();
+        node.addSpaceAround();
+        //LightSources.addLightSource();
     }
 
-    public static void rotation(float tpf){
+    public static void rotation(float tpf) {
         boolean pause = InputsGestion.getPauseState();
-        CelestialBodiesRotations.rotateCelestialBodies(tpf*InputsGestion.getFlowOfTime(), pause);
+        CelestialBodiesRotations.rotateCelestialBodies(tpf, pause);
 
     }
 
-    public static SimpleApplication getApp(){
+    public static SimpleApplication getApp() {
         return app;
     }
 
-    public static AssetManager getAssetManager(){
+    public static AssetManager getAssetManager() {
         return assetManager;
     }
 
-    public static NodesCreation getNodeDisplay(){
+    public static NodesCreation getNodeDisplay() {
         return node;
     }
 

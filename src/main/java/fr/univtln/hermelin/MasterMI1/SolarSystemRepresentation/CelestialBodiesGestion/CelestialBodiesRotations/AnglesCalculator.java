@@ -1,26 +1,44 @@
 package fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesRotations;
 
 import com.jme3.math.FastMath;
+import com.jme3.math.Vector3f;
+
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation.CelestialBodiesInformation;
 
 public class AnglesCalculator {
 
-    public float calculate(float timePassed, CelestialBodiesInformation celestialBody){
+    private float meanAnomaly(double timePassed,CelestialBodiesInformation celestialBody){
 
-        //approximation of the angle by the Newton-Raphson method
+        /*calculate the mean anomaly of the celestial body depending on the time passed*/
         if (celestialBody.getOrbitalRotationTime() == 0) {
             return 0;
         }
-        float M = FastMath.TWO_PI/celestialBody.getOrbitalRotationTime() * timePassed;
-        float e = celestialBody.getEccentricity();
-        float E_n = M;
+        return ( FastMath.TWO_PI / celestialBody.getOrbitalRotationTime() )*(float)timePassed;
+    }
 
-        //E's approximation with 5 iterations
-        for (int i = 0; i < 4; i++) {
-            E_n = E_n - (E_n - e * FastMath.sin(E_n) - M) / (1 - e * FastMath.cos(E_n));
+
+
+    public float calculate(double timePassed, CelestialBodiesInformation celestialBody) {
+
+        /* knowing that tan(O/2)sqrt(1-e/1+e) = tan(E/2)
+        we use newton raphson method to approximate the value of E
+         */
+
+        if (celestialBody.getOrbitalRotationTime() == 0) {
+            return 0;
         }
 
-        //calculate the true angle because theta = 2 * atan(sqrt((1 + e) / (1 - e)) * tan(E/2)) with the approximation E_n
-        return (2 * FastMath.atan(FastMath.sqrt((1 + e) / (1 - e)) * FastMath.tan(E_n / 2))) % FastMath.TWO_PI;
+        float M = meanAnomaly(timePassed,celestialBody);
+
+        float E = M;
+        for(int i=0; i<10; i++ ){
+            float E1 = E + (M + celestialBody.getEccentricity() * FastMath.sin(E) - E)*(1 + celestialBody.getEccentricity() * FastMath.cos(E))/(1 - FastMath.pow(celestialBody.getEccentricity() * FastMath.cos(E),2));
+            if (FastMath.abs(E-E1) < 1e-6) {
+                break;
+            }
+            E = E1;
+        }
+        //System.out.println("E: " + 2 * FastMath.atan(FastMath.tan(E/2)*FastMath.sqrt((1+celestialBody.getEccentricity())/(1-celestialBody.getEccentricity()))));
+        return 2 * FastMath.atan(FastMath.tan(E/2)*FastMath.sqrt((1+celestialBody.getEccentricity())/(1-celestialBody.getEccentricity())));
     }
 }

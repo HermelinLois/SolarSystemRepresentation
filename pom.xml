@@ -104,5 +104,26 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.13.4</version>
         </dependency>
+
+        <!-- Dépendance principale de Lemur -->
+        <dependency>
+            <groupId>com.simsilica</groupId>
+            <artifactId>lemur</artifactId>
+            <version>1.16.0</version>
+        </dependency>
+
+        <!-- Module Lemur Proto (composants supplémentaires) -->
+        <dependency>
+            <groupId>com.simsilica</groupId>
+            <artifactId>lemur-proto</artifactId>
+            <version>1.13.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>3.0.23</version>
+            <type>pom</type>
+        </dependency>
     </dependencies>
 </project>
