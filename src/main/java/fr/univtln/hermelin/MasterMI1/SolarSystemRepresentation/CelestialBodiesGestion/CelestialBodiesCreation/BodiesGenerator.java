@@ -33,10 +33,10 @@ public class BodiesGenerator {
             String aroundPlanet = body.get("aroundPlanet").has("planet")? body.get("aroundPlanet").get("planet").asText().toLowerCase() : null;
             /*if(name.equals("sun")) {
                 System.out.println("Radius: " + radius+" "+name+" "+sideralRotation+" "+bodyType+" "+semimajorAxis+" "+sideralOrbit+" "+inclination+" "+eccentricity+" "+aroundPlanet+" "+weight);
-                new CelestialBodiesInformation(name, radius, sideralRotation, bodyType, semimajorAxis, sideralOrbit, inclination, eccentricity, null, weight);
+                new CelestialBodiesInformation(name, radius, sideralRotation, bodyType, semimajorAxis, sideralOrbit, inclination, eccentricity);
             }*/
 
-            new CelestialBodiesInformation(name, radius, sideralRotation, bodyType, semimajorAxis, sideralOrbit, inclination, eccentricity,aroundPlanet, weight);
+            new CelestialBodiesInformation(name, radius, sideralRotation, bodyType, semimajorAxis, sideralOrbit, inclination, eccentricity);
         }
     }
 }

@@ -59,7 +59,7 @@ public class OrbitalsRepresentation {
     private static void showOrbitalRepresentation(CelestialBodiesInformation celestialBody, boolean show){
         if (show){
             Mesh orbitMesh = celestialBody.getEllipticCurve();
-            Vector3f[] points = createPoints(celestialBody, 100);
+            Vector3f[] points = createPoints(celestialBody, 200);
             orbitMesh.setBuffer(VertexBuffer.Type.Position, 3, BufferUtils.createFloatBuffer(points));
             orbitMesh.updateBound();
 

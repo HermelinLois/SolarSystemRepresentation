@@ -58,6 +58,9 @@ public class CelestialBodiesCreation {
             celestialBodyMat.setTexture("DiffuseMap", celestialBodyTexture);
         }
         celestialBody.setMaterial(celestialBodyMat);
+
+        //axed well in the space
+        //celestialBody.rotate( -FastMath.PI/2 + FastMath.DEG_TO_RAD*celestialElement.getAxialTilt(), 0, 0 );
         return celestialBody;
     }
 

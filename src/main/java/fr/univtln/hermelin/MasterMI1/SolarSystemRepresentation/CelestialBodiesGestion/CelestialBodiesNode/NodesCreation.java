@@ -81,7 +81,6 @@ public class NodesCreation {
     //link a celestial body to the solar system
     public void linkBodyToSolarSystem(CelestialBodiesInformation celestialBody) {
         String name = celestialBody.getName();
-        System.out.println(" ... name link: " + name);
         try {
             getNode(name).attachChild(celestialBody.getCelestialBody());
         } catch (Exception e) {

@@ -125,7 +125,7 @@ public class InputsGestion {
             camNode.setLocalTranslation(new Vector3f(0, 30, 50));
 
         } else {
-            camNode.setLocalTranslation(bodyPosition.add(distance * FastMath.cos(angle), 0, distance * FastMath.sin(angle)));
+            camNode.setLocalTranslation(bodyPosition.add(distance * FastMath.cos(angle), 0.5f, distance * FastMath.sin(angle)));
         }
     }
 
