@@ -86,8 +86,8 @@ public class CelestialBodiesCreation {
             vertices[i * 2 + 1] = new Vector3f(outerRadius * FastMath.cos(angle), 0, outerRadius * FastMath.sin(angle));
 
             // Texture coordinates
-            texCoord[i * 2] = new Vector2f(angle / FastMath.TWO_PI, 0); // Inner
-            texCoord[i * 2 + 1] = new Vector2f(angle / FastMath.TWO_PI, 1); // Outer
+            texCoord[i * 2] = new Vector2f(0, angle / FastMath.TWO_PI); // Inner
+            texCoord[i * 2 + 1] = new Vector2f(1, angle / FastMath.TWO_PI); // Outer
         }
 
         for (int i = 0; i < segments; i++) {
