@@ -114,7 +114,6 @@ public class InputsGestion {
     }
 
     private static void updateCameraOrientation() {
-        camNode.lookAt(celestialBodiesMap.get(bodyInView.getName()).getCelestialBody().getLocalTranslation(), Vector3f.UNIT_Y);
         camera.lookAt(celestialBodiesMap.get(bodyInView.getName()).getCelestialBody().getLocalTranslation(), Vector3f.UNIT_Y);
     }
 
