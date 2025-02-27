@@ -1,15 +1,20 @@
 package fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
-import java.util.*;
 import com.jme3.scene.Mesh;
 
 public class CelestialBodiesInformation {
+
     //list of all celestial bodies information
     private static final Map<String, CelestialBodiesInformation> celestialBodiesInformationMap = new HashMap<>();
-    private static final List<CelestialBodiesInformation> celestialBodiesInformationList= new ArrayList<>();
+    private static final List<CelestialBodiesInformation> celestialBodiesInformationList = new ArrayList<>();
 
     //information needed for each celestial body
     private final String name;
@@ -30,18 +35,17 @@ public class CelestialBodiesInformation {
     protected CelestialBodiesInformation(String name, float radius, float sideralRotation, String bodyType, float semimajorAxis, float sideralOrbit, float inclination, float eccen, float weight) {
         this.name = name;
 
-        /*if(name.equals("sun")){
-            this.radius = radius/200_00f;
+        if (name.equals("sun")) {
+            this.radius = radius / 20_000f;
         } else {
-            this.radius = radius/10_000f;
-        }*/
-        this.radius = 1;
+            this.radius = radius / 25_000f;
+        }
+        //this.radius = 1;
 
-
-        this.sideralOrbit = sideralOrbit*24*60*60; //in seconds
+        this.sideralOrbit = sideralOrbit * 24 * 60 * 60; //in seconds
         this.bodyType = bodyType;
-        this.semiMajorAxis = semimajorAxis/20_000f;
-        this.sideralRotation = sideralRotation*60*60; //in seconds
+        this.semiMajorAxis = semimajorAxis / 900_000f;
+        this.sideralRotation = sideralRotation * 60 * 60; //in seconds
         this.inclination = inclination;
         this.pathToTexture = "Textures/" + name + ".jpg";
         this.pathToModel = "Models/" + name + "3D.stl";
@@ -68,7 +72,7 @@ public class CelestialBodiesInformation {
         return bodyType;
     }
 
-    public String getPathToTexture(){
+    public String getPathToTexture() {
         return pathToTexture;
     }
 
@@ -84,15 +88,15 @@ public class CelestialBodiesInformation {
         return inclination;
     }
 
-    public Geometry getCelestialBody(){
+    public Geometry getCelestialBody() {
         return celestialBody;
     }
 
-    public Mesh getEllipticCurve(){
+    public Mesh getEllipticCurve() {
         return meshUsed;
     }
 
-    public void setEllipticCurve(Mesh meshUsed){
+    public void setEllipticCurve(Mesh meshUsed) {
         this.meshUsed = meshUsed;
     }
 
@@ -102,31 +106,35 @@ public class CelestialBodiesInformation {
         return new Vector3f(a * FastMath.cos(angle), 0, a * FastMath.sin(angle));
     }
 
-    public static Map<String,CelestialBodiesInformation> getCelestialBodiesMap(){
-        return  celestialBodiesInformationMap;
+    public static Map<String, CelestialBodiesInformation> getCelestialBodiesMap() {
+        return celestialBodiesInformationMap;
     }
 
-    public static List<CelestialBodiesInformation> getCelestialBodiesList(){
+    public static List<CelestialBodiesInformation> getCelestialBodiesList() {
         return celestialBodiesInformationList;
     }
 
-    public void setAngle(float angle){
+    public void setAngle(float angle) {
         this.angle = angle;
     }
 
-    public float getAngle(){
+    public float getAngle() {
         return angle;
     }
 
-    public float getWeight(){
+    public float getWeight() {
         return weight;
     }
 
-    public float getEccentricity(){
+    public float getEccentricity() {
         return eccentricity;
     }
 
-    public String getPathToModel(){
+    public String getPathToModel() {
         return pathToModel;
+    }
+
+    public float getSemiMajorAxis() {
+        return semiMajorAxis;
     }
 }

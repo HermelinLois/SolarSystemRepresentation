@@ -1,10 +1,10 @@
 package fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation;
 
-import com.jme3.material.RenderState;
-import com.jme3.scene.*;
 import org.jetbrains.annotations.NotNull;
+
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
+import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
@@ -12,9 +12,14 @@ import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.BloomFilter;
 import com.jme3.renderer.queue.RenderQueue;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.Mesh;
+import com.jme3.scene.Spatial;
+import com.jme3.scene.VertexBuffer;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.texture.Texture;
 import com.jme3.util.BufferUtils;
+
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesDisplay;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesNode.NodesCreation;
 
@@ -24,19 +29,19 @@ public class CelestialBodiesCreation {
     private final NodesCreation node = CelestialBodiesDisplay.getNodeDisplay();
 
     //display the celestial body
-    public Geometry createBody(@NotNull CelestialBodiesInformation celestialElement){
+    public Geometry createBody(@NotNull CelestialBodiesInformation celestialElement) {
 
         Sphere celestialBodyMesh = new Sphere(30, 30, celestialElement.getRadius());
         Geometry celestialBody = new Geometry(celestialElement.getName(), celestialBodyMesh);
         celestialBody.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
 
         //celestialBody's skin
-        celestialBodyMesh.setTextureMode( Sphere.TextureMode.Projected );
+        celestialBodyMesh.setTextureMode(Sphere.TextureMode.Projected);
 
         Material celestialBodyMat;
-        Texture celestialBodyTexture = assetManager.loadTexture( celestialElement.getPathToTexture() );
+        Texture celestialBodyTexture = assetManager.loadTexture(celestialElement.getPathToTexture());
 
-        if (celestialBody.getName().equals("sun")){
+        if (celestialBody.getName().equals("sun")) {
             celestialBodyMat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
             celestialBodyMat.setTexture("ColorMap", celestialBodyTexture);
 
@@ -55,18 +60,18 @@ public class CelestialBodiesCreation {
             celestialBodyMat.setTexture("DiffuseMap", celestialBodyTexture);
 
             if (celestialElement.getName().equals("saturn")) {
-               createRing(celestialElement, 100);
+                createRing(celestialElement, 100);
             }
 
         }
         celestialBody.setMaterial(celestialBodyMat);
 
         //axed well in the space
-        celestialBody.rotate( -FastMath.PI/2 + FastMath.DEG_TO_RAD*celestialElement.getInclination(), 0, 0 );
+        celestialBody.rotate(-FastMath.HALF_PI + FastMath.DEG_TO_RAD * celestialElement.getInclination(), 0, 0);
         return celestialBody;
     }
 
-    public void createAsteroidBelt(float innerRadius, float outterRadius){
+    public void createAsteroidBelt(float innerRadius, float outterRadius) {
         //load the j3m model
         Spatial model = assetManager.loadModel("Models/asteroid.j3o");
 
@@ -83,8 +88,8 @@ public class CelestialBodiesCreation {
         //load the model
         model.setMaterial(material);
 
-        model.setLocalScale(1f);
-        for(int i = 0; i < 10_000; i++){
+        model.setLocalScale(5f);
+        for (int i = 0; i < 7_000; i++) {
             //clone the model
             Spatial clonobi = model.clone();
 
@@ -95,13 +100,21 @@ public class CelestialBodiesCreation {
             float angle = FastMath.nextRandomFloat() * FastMath.TWO_PI;
 
             //generate a random height
-            float height = FastMath.nextRandomFloat() * 5 - 2.5f;
+            float height = FastMath.nextRandomFloat() * 2 - 1f;
 
             //create the random position
             Vector3f position = new Vector3f(FastMath.cos(angle) * distance, height, FastMath.sin(angle) * distance);
 
             //set the position
             clonobi.setLocalTranslation(position);
+
+            //random rotation
+            float xAngle = FastMath.nextRandomFloat() * FastMath.TWO_PI;
+            float yAngle = FastMath.nextRandomFloat() * FastMath.TWO_PI;
+            float zAngle = FastMath.nextRandomFloat() * FastMath.TWO_PI;
+            clonobi.rotate(xAngle, yAngle, zAngle);
+
+            //attach the asteroid to the root node
             node.getNode("root").attachChild(clonobi);
         }
     }

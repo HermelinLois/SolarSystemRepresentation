@@ -1,7 +1,6 @@
 package fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.math.Vector3f;
 import com.jme3.system.AppSettings;
 
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesDisplay;
@@ -21,8 +20,7 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         //deactivate the flyCam
-        cam.setFrustumPerspective(90f, (float) cam.getWidth() / cam.getHeight(), 0.1f, 20_000f);
-
+        cam.setFrustumPerspective(90f, (float) cam.getWidth() / cam.getHeight(), 0.1f, 20_000_000f);
 
         //display the celestial bodies
         CelestialBodiesDisplay.display(this);
