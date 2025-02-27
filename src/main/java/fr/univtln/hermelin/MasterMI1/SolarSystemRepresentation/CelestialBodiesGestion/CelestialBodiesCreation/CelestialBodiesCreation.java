@@ -3,7 +3,6 @@ package fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesG
 import com.jme3.material.RenderState;
 import com.jme3.scene.*;
 import org.jetbrains.annotations.NotNull;
-
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
@@ -16,7 +15,6 @@ import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.texture.Texture;
 import com.jme3.util.BufferUtils;
-
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesDisplay;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesNode.NodesCreation;
 
@@ -31,8 +29,6 @@ public class CelestialBodiesCreation {
         Sphere celestialBodyMesh = new Sphere(30, 30, celestialElement.getRadius());
         Geometry celestialBody = new Geometry(celestialElement.getName(), celestialBodyMesh);
         celestialBody.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
-
-
 
         //celestialBody's skin
         celestialBodyMesh.setTextureMode( Sphere.TextureMode.Projected );
@@ -70,7 +66,47 @@ public class CelestialBodiesCreation {
         return celestialBody;
     }
 
-    public void createRing(CelestialBodiesInformation celestialElement, int segments) {
+    public void createAsteroidBelt(float innerRadius, float outterRadius){
+        //load the j3m model
+        Spatial model = assetManager.loadModel("Models/asteroid.j3o");
+
+        //load the texture
+        Texture texture = assetManager.loadTexture("Textures/asteroid.jpg");
+        Material material = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
+        material.setColor("Ambient", ColorRGBA.Gray);
+        material.setColor("Diffuse", ColorRGBA.White);
+        material.setFloat("Shininess", 13f);
+        material.setColor("Specular", ColorRGBA.White.mult(0.5f));
+        material.setBoolean("UseMaterialColors", true);
+        material.setTexture("DiffuseMap", texture);
+
+        //load the model
+        model.setMaterial(material);
+
+        model.setLocalScale(1f);
+        for(int i = 0; i < 10_000; i++){
+            //clone the model
+            Spatial clonobi = model.clone();
+
+            //generate a random distance from sun
+            float distance = FastMath.nextRandomFloat() * (outterRadius - innerRadius) + innerRadius;
+
+            //generate a random angle between 0 and 2*PI
+            float angle = FastMath.nextRandomFloat() * FastMath.TWO_PI;
+
+            //generate a random height
+            float height = FastMath.nextRandomFloat() * 5 - 2.5f;
+
+            //create the random position
+            Vector3f position = new Vector3f(FastMath.cos(angle) * distance, height, FastMath.sin(angle) * distance);
+
+            //set the position
+            clonobi.setLocalTranslation(position);
+            node.getNode("root").attachChild(clonobi);
+        }
+    }
+
+    private void createRing(CelestialBodiesInformation celestialElement, int segments) {
         float innerRadius = celestialElement.getRadius() * 1.5f;
         float outerRadius = celestialElement.getRadius() * 2.5f;
 

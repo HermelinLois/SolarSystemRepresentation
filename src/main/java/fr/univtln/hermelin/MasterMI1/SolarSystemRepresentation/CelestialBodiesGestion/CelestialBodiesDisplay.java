@@ -34,6 +34,14 @@ public class CelestialBodiesDisplay {
             node.linkBodyToSolarSystem(celestialBody);
         }
         OrbitalsRepresentation.initOrbitalRepresentations();
+
+        //create the kuiper belt
+        CelestialBodiesInformation referenceBody = celestialBodiesInformationMap.get("neptune");
+        float innerRadius = referenceBody.getCelestialBody().getWorldTranslation().length() + 10;
+        float outerRadius = referenceBody.getCelestialBody().getWorldTranslation().length() + 20;
+
+        CelestialBodiesCreation creator = new CelestialBodiesCreation();
+        creator.createAsteroidBelt(innerRadius, outerRadius);
         node.addSpaceAround();
         LightSources.addLightSource();
     }
@@ -55,5 +63,4 @@ public class CelestialBodiesDisplay {
     public static NodesCreation getNodeDisplay() {
         return node;
     }
-
 }

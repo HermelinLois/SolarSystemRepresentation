@@ -21,7 +21,6 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         //deactivate the flyCam
-        cam.setLocation(new Vector3f(10, 10, 10));
         cam.setFrustumPerspective(90f, (float) cam.getWidth() / cam.getHeight(), 0.1f, 20_000f);
 
 

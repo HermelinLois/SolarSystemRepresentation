@@ -30,16 +30,17 @@ public class CelestialBodiesInformation {
     protected CelestialBodiesInformation(String name, float radius, float sideralRotation, String bodyType, float semimajorAxis, float sideralOrbit, float inclination, float eccen, float weight) {
         this.name = name;
 
-        if(name.equals("sun")){
+        /*if(name.equals("sun")){
             this.radius = radius/200_00f;
         } else {
             this.radius = radius/10_000f;
-        }
+        }*/
+        this.radius = 1;
 
 
         this.sideralOrbit = sideralOrbit*24*60*60; //in seconds
         this.bodyType = bodyType;
-        this.semiMajorAxis = semimajorAxis/250_000f;
+        this.semiMajorAxis = semimajorAxis/20_000f;
         this.sideralRotation = sideralRotation*60*60; //in seconds
         this.inclination = inclination;
         this.pathToTexture = "Textures/" + name + ".jpg";
