@@ -2,9 +2,9 @@ package fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesG
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
-import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.util.SkyFactory;
+
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation.CelestialBodiesInformation;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesDisplay;
 
@@ -55,8 +55,6 @@ public class NodesCreation {
         uranusNode = new Node("uranusNode");
 
         neptuneNode = new Node("neptuneNod");
-
-
 
         //link the nodes
         solarSystemRootNode.attachChild(sunNode);

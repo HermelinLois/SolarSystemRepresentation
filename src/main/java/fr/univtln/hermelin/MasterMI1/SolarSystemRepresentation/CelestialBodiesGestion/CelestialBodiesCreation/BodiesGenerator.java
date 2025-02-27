@@ -30,7 +30,7 @@ public class BodiesGenerator {
             float sideralOrbit = body.has("sideralOrbit") ? body.get("sideralOrbit").floatValue() : 0.0f;
             float inclination = body.has("inclination") ? body.get("inclination").floatValue() : 0.0f;
             float eccentricity = body.has("eccentricity") ? body.get("eccentricity").floatValue() : 0.0f;
-            float weight = body.has("mass") ? body.get("mass").get("massValue").floatValue()* FastMath.pow(10,body.get("mass").get("massExponent").floatValue()) : 0.0f;
+            float weight = body.has("mass") ? body.get("mass").get("massValue").floatValue() * FastMath.pow(10, body.get("mass").get("massExponent").floatValue()) : 0.0f;
             /*if(name.equals("sun")|| name.equals("saturn")) {
                 new CelestialBodiesInformation(name, radius, sideralRotation, bodyType, semimajorAxis, sideralOrbit, inclination, eccentricity, weight);
             }*/
