@@ -19,7 +19,7 @@ public class AnglesCalculator {
         /* knowing that tan(O/2)sqrt(1-e/1+e) = tan(E/2)
         we use newton raphson method to approximate the value of E
          */
- /* if (celestialBody.getOrbitalRotationTime() == 0) {
+        if (celestialBody.getOrbitalRotationTime() == 0) {
             return 0;
         }
 
@@ -34,8 +34,8 @@ public class AnglesCalculator {
             E = E1;
         }
 
-        float angle = 2 * FastMath.atan(FastMath.tan(E / 2) * FastMath.sqrt((1 + celestialBody.getEccentricity()) / (1 - celestialBody.getEccentricity())));*/
-        float angle = meanAnomaly(timePassed, celestialBody);
+        float angle = 2 * FastMath.atan(FastMath.tan(E / 2) * FastMath.sqrt((1 + celestialBody.getEccentricity()) / (1 - celestialBody.getEccentricity())));
+        //float angle = meanAnomaly(timePassed, celestialBody);
         return angle;
     }
 }

@@ -35,16 +35,17 @@ public class CelestialBodiesInformation {
     protected CelestialBodiesInformation(String name, float radius, float sideralRotation, String bodyType, float semimajorAxis, float sideralOrbit, float inclination, float eccen, float weight) {
         this.name = name;
 
-        if (name.equals("sun")) {
+        if (bodyType.equals("sun")) {
             this.radius = radius / 20_000f;
+        } else if (name.equals("deimos") || name.equals("phobos")) {
+            this.radius = radius / 4_000f;
         } else {
             this.radius = radius / 25_000f;
         }
-        //this.radius = 1;
 
         this.sideralOrbit = sideralOrbit * 24 * 60 * 60; //in seconds
         this.bodyType = bodyType;
-        this.semiMajorAxis = semimajorAxis / 900_000f;
+        this.semiMajorAxis = semimajorAxis / 90_000f;
         this.sideralRotation = sideralRotation * 60 * 60; //in seconds
         this.inclination = inclination;
         this.pathToTexture = "Textures/" + name + ".jpg";

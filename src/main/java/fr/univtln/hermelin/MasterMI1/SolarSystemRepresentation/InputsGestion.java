@@ -13,8 +13,11 @@ import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGe
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation.CelestialBodiesInformation;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodsiesOrbitalRepresentation.OrbitalsRepresentation;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesNode.NodesCreation;
+
 import java.util.List;
 import java.util.Map;
+
+import com.jme3.input.FlyByCamera;
 import com.jme3.input.MouseInput;
 
 public class InputsGestion {
@@ -27,6 +30,8 @@ public class InputsGestion {
     private static InputManager inputManager;
     private static boolean rotating = false;
     private static Camera camera;
+    /*private static FlyByCamera flyCamera;
+    private static boolean freecamera = false;*/
 
     private static CameraNode camNode;
     private static final NodesCreation node = CelestialBodiesDisplay.getNodeDisplay();
@@ -36,9 +41,10 @@ public class InputsGestion {
 
     private static CelestialBodiesInformation bodyInView = celestialBodiesMap.get("sun");
 
-    public InputsGestion(InputManager inputsManager, Camera cam) {
+    public InputsGestion(InputManager inputsManager, Camera cam, FlyByCamera flyCam) {
         inputManager = inputsManager;
         camera = cam;
+        //flyCamera = flyCam;
 
         inputsManager.addMapping("Rewind", new KeyTrigger(KeyInput.KEY_R));
         inputsManager.addMapping("Forward", new KeyTrigger(KeyInput.KEY_F));
@@ -46,9 +52,10 @@ public class InputsGestion {
         inputsManager.addMapping("RightClick", new MouseButtonTrigger(MouseInput.BUTTON_RIGHT));
         inputsManager.addMapping("MouseMoveX", new MouseAxisTrigger(MouseInput.AXIS_X, false));
         inputsManager.addMapping("MouseMoveY", new MouseAxisTrigger(MouseInput.AXIS_Y, false));
+        inputsManager.addMapping("FreeCamera", new KeyTrigger(KeyInput.KEY_C));
 
         inputsManager.addListener(analogListener, new String[]{"Rewind", "Forward", "RightClick"});
-        inputsManager.addListener(actionListener, new String[]{"Show", "RightClick"});
+        inputsManager.addListener(actionListener, new String[]{"Show", "RightClick", "FreeCamera"});
 
         camNode = new CameraNode("camNode", cam);
         camNode.setLocalTranslation(new Vector3f(bodyInView.getRadius() * 2, bodyInView.getRadius(), 0));
@@ -104,11 +111,16 @@ public class InputsGestion {
             if (name.equals("RightClick") && !isPressed) {
                 rotating = false;
             }
+            /*if (name.equals("FreeCamera") && isPressed) {
+                freecamera = !freecamera;
+                flyCamera.setEnabled(freecamera);
+                flyCamera.setMoveSpeed(1000);
+            }*/
         }
     };
 
     public static void updateCamera() {
-        if (!rotating) {
+        if (!rotating /*|| !freecamera*/) {
             updateCameraOrientation();
             updateCameraPosition();
         }
@@ -120,7 +132,7 @@ public class InputsGestion {
 
     private static void updateCameraPosition() {
         float angle = bodyInView.getAngle();
-        float distance = 3f * bodyInView.getRadius();
+        float distance = 4f * bodyInView.getRadius();
 
         if (bodyInView.getName().equals("sun")) {
             camNode.setLocalTranslation(new Vector3f(0, 30, 50));
@@ -155,7 +167,7 @@ public class InputsGestion {
 
         //get the position of the body in the space
         Vector3f bodyPosition = bodyInView.getCelestialBody().getWorldTranslation();
-        float distanceFromPlanet = 2 * bodyInView.getRadius();
+        float distanceFromPlanet = 3 * bodyInView.getRadius();
 
         Vector3f xRotation = new Vector3f(FastMath.cos(angleX), 0, FastMath.sin(angleX)).mult(distanceFromPlanet);
         camNode.setLocalTranslation(xRotation);

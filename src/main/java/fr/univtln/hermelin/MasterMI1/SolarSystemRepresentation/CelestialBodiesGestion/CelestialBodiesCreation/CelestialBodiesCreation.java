@@ -32,7 +32,12 @@ public class CelestialBodiesCreation {
     public Geometry createBody(@NotNull CelestialBodiesInformation celestialElement) {
 
         Sphere celestialBodyMesh = new Sphere(30, 30, celestialElement.getRadius());
-        Geometry celestialBody = new Geometry(celestialElement.getName(), celestialBodyMesh);
+        Geometry celestialBody;
+        try {
+            celestialBody = (Geometry) assetManager.loadModel("Models/" + celestialElement.getName() + ".j3o");
+        } catch (Exception e) {
+            celestialBody = new Geometry(celestialElement.getName(), celestialBodyMesh);
+        }
         celestialBody.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
 
         //celestialBody's skin
@@ -51,6 +56,7 @@ public class CelestialBodiesCreation {
             CelestialBodiesDisplay.getApp().getViewPort().addProcessor(fpp);
 
         } else {
+
             celestialBodyMat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
             celestialBodyMat.setColor("Ambient", ColorRGBA.Gray);
             celestialBodyMat.setColor("Diffuse", ColorRGBA.White);
@@ -62,8 +68,8 @@ public class CelestialBodiesCreation {
             if (celestialElement.getName().equals("saturn")) {
                 createRing(celestialElement, 100);
             }
-
         }
+
         celestialBody.setMaterial(celestialBodyMat);
 
         //axed well in the space
@@ -89,7 +95,7 @@ public class CelestialBodiesCreation {
         model.setMaterial(material);
 
         model.setLocalScale(5f);
-        for (int i = 0; i < 7_000; i++) {
+        for (int i = 0; i < 3_000; i++) {
             //clone the model
             Spatial clonobi = model.clone();
 

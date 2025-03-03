@@ -26,7 +26,7 @@ public class Main extends SimpleApplication {
         CelestialBodiesDisplay.display(this);
 
         //create the inputs & the interface
-        new InputsGestion(inputManager, cam);
+        new InputsGestion(inputManager, cam, flyCam);
         new InterfaceButtonsInfo(this);
     }
 
