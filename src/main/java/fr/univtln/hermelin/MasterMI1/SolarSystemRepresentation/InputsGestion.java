@@ -17,6 +17,9 @@ import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGe
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.DisplayNameGenerator;
+
+import com.jme3.app.SimpleApplication;
 import com.jme3.input.FlyByCamera;
 import com.jme3.input.MouseInput;
 
@@ -29,9 +32,10 @@ public class InputsGestion {
     private static Vector2f mousePosition = new Vector2f();
     private static InputManager inputManager;
     private static boolean rotating = false;
-    private static Camera camera;
-    /*private static FlyByCamera flyCamera;
-    private static boolean freecamera = false;*/
+    private static float moonSize = 1;
+    private static FlyByCamera flyCamera;
+    private static boolean freecamera = false;
+    private static boolean switchCam = false;
 
     private static CameraNode camNode;
     private static final NodesCreation node = CelestialBodiesDisplay.getNodeDisplay();
@@ -43,8 +47,7 @@ public class InputsGestion {
 
     public InputsGestion(InputManager inputsManager, Camera cam, FlyByCamera flyCam) {
         inputManager = inputsManager;
-        camera = cam;
-        //flyCamera = flyCam;
+        flyCamera = flyCam;
 
         inputsManager.addMapping("Rewind", new KeyTrigger(KeyInput.KEY_R));
         inputsManager.addMapping("Forward", new KeyTrigger(KeyInput.KEY_F));
@@ -52,14 +55,15 @@ public class InputsGestion {
         inputsManager.addMapping("RightClick", new MouseButtonTrigger(MouseInput.BUTTON_RIGHT));
         inputsManager.addMapping("MouseMoveX", new MouseAxisTrigger(MouseInput.AXIS_X, false));
         inputsManager.addMapping("MouseMoveY", new MouseAxisTrigger(MouseInput.AXIS_Y, false));
-        inputsManager.addMapping("FreeCamera", new KeyTrigger(KeyInput.KEY_C));
+        inputsManager.addMapping("Boost", new KeyTrigger(KeyInput.KEY_B));
+        inputsManager.addMapping("NegativeBoost", new KeyTrigger(KeyInput.KEY_N));
+        inputsManager.addMapping("FreeCamera", new KeyTrigger(KeyInput.KEY_A));
 
-        inputsManager.addListener(analogListener, new String[]{"Rewind", "Forward", "RightClick"});
+        inputsManager.addListener(analogListener, new String[]{"Rewind", "Forward", "RightClick", "Boost", "NegativeBoost"});
         inputsManager.addListener(actionListener, new String[]{"Show", "RightClick", "FreeCamera"});
 
         camNode = new CameraNode("camNode", cam);
-        camNode.setLocalTranslation(new Vector3f(bodyInView.getRadius() * 2, bodyInView.getRadius(), 0));
-        camNode.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
+        camNode.setLocalTranslation(new Vector3f(bodyInView.getRadius() * 5, bodyInView.getRadius() * 2, 0));
 
         node.getNode("root").attachChild(camNode);
     }
@@ -93,6 +97,24 @@ public class InputsGestion {
                     rotateAroundPlanet(mouseDelta);
                 }
             }
+
+            if (name.equals("Boost")) {
+                CelestialBodiesInformation deimos = celestialBodiesMap.get("deimos");
+                CelestialBodiesInformation phobos = celestialBodiesMap.get("phobos");
+
+                moonSize *= 1.01f;
+                deimos.getCelestialBody().setLocalScale(moonSize);
+                phobos.getCelestialBody().setLocalScale(moonSize);
+            }
+
+            if (name.equals("NegativeBoost")) {
+                CelestialBodiesInformation deimos = celestialBodiesMap.get("deimos");
+                CelestialBodiesInformation phobos = celestialBodiesMap.get("phobos");
+
+                moonSize *= 0.99f;
+                deimos.getCelestialBody().setLocalScale(moonSize);
+                phobos.getCelestialBody().setLocalScale(moonSize);
+            }
         }
     };
 
@@ -111,23 +133,26 @@ public class InputsGestion {
             if (name.equals("RightClick") && !isPressed) {
                 rotating = false;
             }
-            /*if (name.equals("FreeCamera") && isPressed) {
+            if (name.equals("FreeCamera") && isPressed) {
+                System.out.println(freecamera);
                 freecamera = !freecamera;
-                flyCamera.setEnabled(freecamera);
-                flyCamera.setMoveSpeed(1000);
-            }*/
+                System.out.println(freecamera);
+                switchCam = true;
+            }
         }
     };
 
-    public static void updateCamera() {
-        if (!rotating /*|| !freecamera*/) {
-            updateCameraOrientation();
+    public static void updateCamera(SimpleApplication app) {
+
+        System.out.println("free camera : " + freecamera + " rotating : " + rotating);
+        if (!rotating && !freecamera) {
             updateCameraPosition();
         }
-    }
-
-    private static void updateCameraOrientation() {
-        camera.lookAt(celestialBodiesMap.get("sun").getCelestialBody().getWorldTranslation(), Vector3f.UNIT_Y);
+        if (switchCam) {
+            app.getFlyByCamera().setEnabled(freecamera);
+            app.getFlyByCamera().setMoveSpeed(1000);
+            switchCam = false;
+        }
     }
 
     private static void updateCameraPosition() {
@@ -135,9 +160,9 @@ public class InputsGestion {
         float distance = 4f * bodyInView.getRadius();
 
         if (bodyInView.getName().equals("sun")) {
-            camNode.setLocalTranslation(new Vector3f(0, 30, 50));
+            camNode.setLocalTranslation(new Vector3f(0, 300, 500));
         } else {
-            camNode.setLocalTranslation(distance * FastMath.cos(angle), bodyInView.getRadius() / 3, distance * FastMath.sin(angle));
+            camNode.setLocalTranslation(distance * FastMath.cos(angle), bodyInView.getRadius(), distance * FastMath.sin(angle));
         }
         camNode.lookAt(node.getNode(bodyInView.getName()).getParent().getWorldTranslation(), Vector3f.UNIT_Y);
     }
@@ -167,7 +192,7 @@ public class InputsGestion {
 
         //get the position of the body in the space
         Vector3f bodyPosition = bodyInView.getCelestialBody().getWorldTranslation();
-        float distanceFromPlanet = 3 * bodyInView.getRadius();
+        float distanceFromPlanet = 4 * bodyInView.getRadius();
 
         Vector3f xRotation = new Vector3f(FastMath.cos(angleX), 0, FastMath.sin(angleX)).mult(distanceFromPlanet);
         camNode.setLocalTranslation(xRotation);

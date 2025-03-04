@@ -23,12 +23,12 @@ public class Convert extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
-        String path = "ModelsObject/phobos.obj";
+        String path = "ModelsObject/asteroid.obj";
 
         model = assetManager.loadModel(path);
 
         // model.setMaterial(mat);
-        Texture texture = assetManager.loadTexture("Textures/phobos.jpg");
+        Texture texture = assetManager.loadTexture("Textures/asteroid.jpg");
         Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
         mat.setColor("Ambient", ColorRGBA.Gray);
         mat.setColor("Diffuse", ColorRGBA.White);
@@ -38,10 +38,7 @@ public class Convert extends SimpleApplication {
         mat.setTexture("DiffuseMap", texture);
 
         model.setMaterial(mat);
-
-        model.setLocalScale(1f);
         rootNode.attachChild(model);
-        model.setLocalTranslation(new Vector3f(0, 0, 10));
 
         AmbientLight al = new AmbientLight();
         al.setColor(ColorRGBA.White.mult(0.1f));
@@ -55,7 +52,7 @@ public class Convert extends SimpleApplication {
         cam.lookAt(model.getWorldTranslation(), Vector3f.UNIT_Y);
 
         try {
-            BinaryExporter.getInstance().save(model, new File("src/main/resources/Models/phobos.j3o"));
+            BinaryExporter.getInstance().save(model, new File("src/main/resources/Models/asteroid.j3o"));
         } catch (Exception e) {
             System.out.println(" ... ne marche pas ... ");
         }

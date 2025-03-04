@@ -36,16 +36,22 @@ public class CelestialBodiesInformation {
         this.name = name;
 
         if (bodyType.equals("sun")) {
-            this.radius = radius / 20_000f;
+            this.radius = radius / 30_000f;
         } else if (name.equals("deimos") || name.equals("phobos")) {
-            this.radius = radius / 4_000f;
+            this.radius = 5e-10f;
         } else {
-            this.radius = radius / 25_000f;
+            this.radius = radius / 15_000f;
         }
 
         this.sideralOrbit = sideralOrbit * 24 * 60 * 60; //in seconds
         this.bodyType = bodyType;
-        this.semiMajorAxis = semimajorAxis / 90_000f;
+
+        if (name.equals("deimos") || name.equals("phobos")) {
+            this.semiMajorAxis = semimajorAxis / 65_000f;
+        } else {
+            this.semiMajorAxis = semimajorAxis / 90_000f;
+        }
+
         this.sideralRotation = sideralRotation * 60 * 60; //in seconds
         this.inclination = inclination;
         this.pathToTexture = "Textures/" + name + ".jpg";

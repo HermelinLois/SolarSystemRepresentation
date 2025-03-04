@@ -33,6 +33,6 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleUpdate(float tpf) {
         CelestialBodiesDisplay.rotation(tpf);
-        InputsGestion.updateCamera();
+        InputsGestion.updateCamera(this);
     }
 }

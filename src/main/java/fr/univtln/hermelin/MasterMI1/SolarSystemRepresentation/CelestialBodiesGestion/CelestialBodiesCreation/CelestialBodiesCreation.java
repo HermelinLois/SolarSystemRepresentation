@@ -19,6 +19,7 @@ import com.jme3.scene.VertexBuffer;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.texture.Texture;
 import com.jme3.util.BufferUtils;
+import com.jme3.util.TangentBinormalGenerator;
 
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesDisplay;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesNode.NodesCreation;
@@ -71,6 +72,12 @@ public class CelestialBodiesCreation {
         }
 
         celestialBody.setMaterial(celestialBodyMat);
+        try {
+            celestialBodyMat.setTexture("NormalMap", assetManager.loadTexture("NormalMap/" + celestialElement.getName() + "NM.jpg"));
+            TangentBinormalGenerator.generate(celestialBody);
+        } catch (Exception e) {
+            System.out.println("No normal map for " + celestialElement.getName());
+        }
 
         //axed well in the space
         celestialBody.rotate(-FastMath.HALF_PI + FastMath.DEG_TO_RAD * celestialElement.getInclination(), 0, 0);

@@ -38,7 +38,7 @@ build/
 .DS_Store
 
 ### Log errors ###
-.log/
+*.log
 
 ### ressources ###
 **/resources/**
