@@ -36,11 +36,11 @@ public class CelestialBodiesDisplay {
 
         //create the kuiper belt
         CelestialBodiesInformation referenceBody = celestialBodiesInformationMap.get("neptune");
-        float innerRadius = referenceBody.getSemiMajorAxis() + 0.5f;
-        float outerRadius = referenceBody.getSemiMajorAxis() + 1;
+        float innerRadius = referenceBody.getSemiMajorAxis();
+        float outerRadius = referenceBody.getSemiMajorAxis() + 200;
 
         CelestialBodiesCreation creator = new CelestialBodiesCreation();
-        creator.createAsteroidBelt(innerRadius, outerRadius);
+        creator.createAsteroidBelt(innerRadius, outerRadius, 200);
         node.addSpaceAround();
         LightSources.addLightSource();
     }

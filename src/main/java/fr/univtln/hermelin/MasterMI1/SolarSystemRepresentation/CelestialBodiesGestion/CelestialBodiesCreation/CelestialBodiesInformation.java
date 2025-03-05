@@ -38,7 +38,7 @@ public class CelestialBodiesInformation {
         if (bodyType.equals("sun")) {
             this.radius = radius / 30_000f;
         } else if (name.equals("deimos") || name.equals("phobos")) {
-            this.radius = 5e-10f;
+            this.radius = radius / 1_000_000f;
         } else {
             this.radius = radius / 15_000f;
         }
@@ -47,9 +47,9 @@ public class CelestialBodiesInformation {
         this.bodyType = bodyType;
 
         if (name.equals("deimos") || name.equals("phobos")) {
-            this.semiMajorAxis = semimajorAxis / 65_000f;
+            this.semiMajorAxis = semimajorAxis / 30_000f;
         } else {
-            this.semiMajorAxis = semimajorAxis / 90_000f;
+            this.semiMajorAxis = semimajorAxis / 70_000f;
         }
 
         this.sideralRotation = sideralRotation * 60 * 60; //in seconds

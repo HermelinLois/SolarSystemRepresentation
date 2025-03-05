@@ -11,6 +11,7 @@ public class Main extends SimpleApplication {
         Main app = new Main();
         AppSettings settings = new AppSettings(true);
         settings.setFullscreen(false);
+        settings.setResolution(1920, 1080);
         settings.setAudioRenderer(null);
         settings.setFrameRate(60);
         app.setSettings(settings);
@@ -21,12 +22,13 @@ public class Main extends SimpleApplication {
     public void simpleInitApp() {
         //deactivate the flyCam
         cam.setFrustumPerspective(90f, (float) cam.getWidth() / cam.getHeight(), 0.1f, 20_000_000f);
+        flyCam.setEnabled(false);
 
         //display the celestial bodies
         CelestialBodiesDisplay.display(this);
 
         //create the inputs & the interface
-        new InputsGestion(inputManager, cam, flyCam);
+        new InputsGestion(inputManager, cam);
         new InterfaceButtonsInfo(this);
     }
 

@@ -36,6 +36,9 @@ public class CelestialBodiesCreation {
         Geometry celestialBody;
         try {
             celestialBody = (Geometry) assetManager.loadModel("Models/" + celestialElement.getName() + ".j3o");
+            if (celestialElement.getName().equals("deimos") || celestialElement.getName().equals("phobos")) {
+                celestialBody.setLocalScale(0.0002f);
+            }
         } catch (Exception e) {
             celestialBody = new Geometry(celestialElement.getName(), celestialBodyMesh);
         }
@@ -84,7 +87,7 @@ public class CelestialBodiesCreation {
         return celestialBody;
     }
 
-    public void createAsteroidBelt(float innerRadius, float outterRadius) {
+    public void createAsteroidBelt(float innerRadius, float outterRadius, float heightVariation) {
         //load the j3m model
         Spatial model = assetManager.loadModel("Models/asteroid.j3o");
 
@@ -102,7 +105,7 @@ public class CelestialBodiesCreation {
         model.setMaterial(material);
 
         model.setLocalScale(5f);
-        for (int i = 0; i < 3_000; i++) {
+        for (int i = 0; i < 20_000; i++) {
             //clone the model
             Spatial clonobi = model.clone();
 
@@ -113,7 +116,7 @@ public class CelestialBodiesCreation {
             float angle = FastMath.nextRandomFloat() * FastMath.TWO_PI;
 
             //generate a random height
-            float height = FastMath.nextRandomFloat() * 2 - 1f;
+            float height = FastMath.nextRandomFloat() * heightVariation - heightVariation / 2;
 
             //create the random position
             Vector3f position = new Vector3f(FastMath.cos(angle) * distance, height, FastMath.sin(angle) * distance);
