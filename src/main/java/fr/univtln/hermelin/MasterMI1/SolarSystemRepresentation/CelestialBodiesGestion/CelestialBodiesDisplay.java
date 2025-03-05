@@ -35,12 +35,17 @@ public class CelestialBodiesDisplay {
         OrbitalsRepresentation.initOrbitalRepresentations();
 
         //create the kuiper belt
-        CelestialBodiesInformation referenceBody = celestialBodiesInformationMap.get("neptune");
-        float innerRadius = referenceBody.getSemiMajorAxis();
-        float outerRadius = referenceBody.getSemiMajorAxis() + 200;
+        CelestialBodiesInformation referenceBodyKuiper = celestialBodiesInformationMap.get("neptune");
+        CelestialBodiesInformation referenceBodyPrincipal = celestialBodiesInformationMap.get("mars");
+        float innerRadiusKuiper = referenceBodyKuiper.getSemiMajorAxis();
+        float outerRadiusKuiper = referenceBodyKuiper.getSemiMajorAxis() + 200;
+
+        float innerRaduisPrincipal = referenceBodyPrincipal.getSemiMajorAxis() + 10;
+        float outerRadiusPrincipal = referenceBodyPrincipal.getSemiMajorAxis() + 200;
 
         CelestialBodiesCreation creator = new CelestialBodiesCreation();
-        creator.createAsteroidBelt(innerRadius, outerRadius, 200);
+        creator.createAsteroidBelt(innerRadiusKuiper, outerRadiusKuiper, 200, 7_000);
+        creator.createAsteroidBelt(innerRaduisPrincipal, outerRadiusPrincipal, 100, 3_000);
         node.addSpaceAround();
         LightSources.addLightSource();
     }

@@ -25,6 +25,9 @@ public class InterfaceButtonsInfo {
     private static Label weight;
     private static Label radius;
     private static Label type;
+    private static Label sideralOrbit;
+    private static Label sideralRotation;
+    private static Label eccentricity;
 
     public InterfaceButtonsInfo(SimpleApplication app) {
         GuiGlobals.initialize(app);
@@ -38,8 +41,11 @@ public class InterfaceButtonsInfo {
         //preload the first body
         name.setText("Information about : " + celestialBodiesList.get(0).getName());
         weight.setText("Weight : " + celestialBodiesList.get(0).getWeight());
-        radius.setText("Radius : " + celestialBodiesList.get(0).getRadius()*150_000f);
+        radius.setText("Radius : " + celestialBodiesList.get(0).getRadius() * 150_000f);
         type.setText("Type : " + celestialBodiesList.get(0).getBodyType());
+        eccentricity.setText("Eccentricity : " + celestialBodiesList.get(0).getEccentricity());
+        sideralOrbit.setText("Sideral orbit : " + celestialBodiesList.get(0).getOrbitalRotationTime());
+        sideralRotation.setText("Sideral rotation : " + celestialBodiesList.get(0).getSelfRotationSpeed());
 
     }
 
@@ -62,12 +68,17 @@ public class InterfaceButtonsInfo {
             weight.setText("Weight : " + bodyInView.getWeight());
 
             if (bodyInView.getName().equals("sun")) {
-                radius.setText("Radius : " + bodyInView.getRadius()*800_00f);
+                radius.setText("Radius : " + bodyInView.getRadius() * 30_000f);
+            } else if (bodyInView.getName().equals("deimos") || bodyInView.getName().equals("phobos")) {
+                radius.setText("Radius : " + bodyInView.getRadius());
             } else {
-                radius.setText("Radius : " + bodyInView.getRadius()*150_000f);
+                radius.setText("Radius : " + bodyInView.getRadius() * 15_000f);
             }
 
             type.setText("Type : " + bodyInView.getBodyType());
+            eccentricity.setText("Eccentricity : " + bodyInView.getEccentricity());
+            sideralOrbit.setText("Sideral orbit : " + bodyInView.getOrbitalRotationTime());
+            sideralRotation.setText("Sideral rotation : " + bodyInView.getSelfRotationSpeed());
         });
 
         stop.addClickCommands(source -> {
@@ -78,7 +89,6 @@ public class InterfaceButtonsInfo {
             showInformation = !showInformation;
             if (showInformation) {
                 guiNode.attachChild(infoScreen);
-
             } else {
                 infoScreen.removeFromParent();
             }
@@ -96,5 +106,8 @@ public class InterfaceButtonsInfo {
         weight = infoScreen.addChild(new Label("Weight : toUpdate"));
         radius = infoScreen.addChild(new Label("Radius : toUpdate"));
         type = infoScreen.addChild(new Label("Type : toUpdate"));
+        eccentricity = infoScreen.addChild(new Label("Eccentricity : toUpdate"));
+        sideralOrbit = infoScreen.addChild(new Label("Sideral orbit : toUpdate"));
+        sideralRotation = infoScreen.addChild(new Label("Sideral rotation : toUpdate"));
     }
 }

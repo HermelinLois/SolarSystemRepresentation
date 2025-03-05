@@ -87,7 +87,7 @@ public class CelestialBodiesCreation {
         return celestialBody;
     }
 
-    public void createAsteroidBelt(float innerRadius, float outterRadius, float heightVariation) {
+    public void createAsteroidBelt(float innerRadius, float outterRadius, float heightVariation, int numberAsteroids) {
         //load the j3m model
         Spatial model = assetManager.loadModel("Models/asteroid.j3o");
 
@@ -105,7 +105,7 @@ public class CelestialBodiesCreation {
         model.setMaterial(material);
 
         model.setLocalScale(5f);
-        for (int i = 0; i < 20_000; i++) {
+        for (int i = 0; i < numberAsteroids; i++) {
             //clone the model
             Spatial clonobi = model.clone();
 
