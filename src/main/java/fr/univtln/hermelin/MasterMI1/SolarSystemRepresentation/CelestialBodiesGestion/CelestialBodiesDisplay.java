@@ -40,8 +40,8 @@ public class CelestialBodiesDisplay {
         float innerRadiusKuiper = referenceBodyKuiper.getSemiMajorAxis();
         float outerRadiusKuiper = referenceBodyKuiper.getSemiMajorAxis() + 200;
 
-        float innerRaduisPrincipal = referenceBodyPrincipal.getSemiMajorAxis() + 10;
-        float outerRadiusPrincipal = referenceBodyPrincipal.getSemiMajorAxis() + 200;
+        float innerRaduisPrincipal = referenceBodyPrincipal.getSemiMajorAxis() + 500;
+        float outerRadiusPrincipal = referenceBodyPrincipal.getSemiMajorAxis() + 1_000;
 
         CelestialBodiesCreation creator = new CelestialBodiesCreation();
         creator.createAsteroidBelt(innerRadiusKuiper, outerRadiusKuiper, 200, 7_000);
