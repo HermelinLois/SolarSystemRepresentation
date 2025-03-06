@@ -7,7 +7,6 @@ import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
-import com.jme3.scene.CameraNode;
 
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesDisplay;
 import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation.CelestialBodiesInformation;
@@ -17,10 +16,8 @@ import fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGe
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.DisplayNameGenerator;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.input.FlyByCamera;
 import com.jme3.input.MouseInput;
 
 public class InputsGestion {
@@ -37,7 +34,6 @@ public class InputsGestion {
     private static boolean freecamera = false;
     private static boolean switchCam = false;
 
-    private static CameraNode camNode;
     private static final NodesCreation node = CelestialBodiesDisplay.getNodeDisplay();
     private static final Map<String, CelestialBodiesInformation> celestialBodiesMap = CelestialBodiesInformation.getCelestialBodiesMap();
     private static final List<CelestialBodiesInformation> celestialBodiesList = CelestialBodiesInformation.getCelestialBodiesList();
