@@ -41,7 +41,7 @@ public class InterfaceButtonsInfo {
         //preload the first body
         name.setText("Information about : " + celestialBodiesList.get(0).getName());
         weight.setText("Weight : " + celestialBodiesList.get(0).getWeight());
-        radius.setText("Radius : " + celestialBodiesList.get(0).getRadius() * 150_000f);
+        radius.setText("Radius : " + celestialBodiesList.get(0).getRadius() * 30_000f);
         type.setText("Type : " + celestialBodiesList.get(0).getBodyType());
         eccentricity.setText("Eccentricity : " + celestialBodiesList.get(0).getEccentricity());
         sideralOrbit.setText("Sideral orbit : " + celestialBodiesList.get(0).getOrbitalRotationTime());

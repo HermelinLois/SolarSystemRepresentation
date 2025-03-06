@@ -1,6 +1,5 @@
 package fr.univtln.hermelin.MasterMI1.SolarSystemRepresentation.CelestialBodiesGestion.CelestialBodiesCreation;
 
-import org.jetbrains.annotations.NotNull;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
@@ -30,7 +29,7 @@ public class CelestialBodiesCreation {
     private final NodesCreation node = CelestialBodiesDisplay.getNodeDisplay();
 
     //display the celestial body
-    public Geometry createBody(@NotNull CelestialBodiesInformation celestialElement) {
+    public Geometry createBody(CelestialBodiesInformation celestialElement) {
 
         Sphere celestialBodyMesh = new Sphere(30, 30, celestialElement.getRadius());
         Geometry celestialBody;

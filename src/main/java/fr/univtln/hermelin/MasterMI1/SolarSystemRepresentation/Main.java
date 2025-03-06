@@ -10,7 +10,7 @@ public class Main extends SimpleApplication {
     public static void main(String[] args) {
         Main app = new Main();
         AppSettings settings = new AppSettings(true);
-        settings.setFullscreen(false);
+        settings.setFullscreen(true);
         settings.setResolution(1920, 1080);
         settings.setAudioRenderer(null);
         settings.setFrameRate(60);
