@@ -37,8 +37,8 @@ public class CelestialBodiesDisplay {
         //create the kuiper belt
         CelestialBodiesInformation referenceBodyKuiper = celestialBodiesInformationMap.get("neptune");
         CelestialBodiesInformation referenceBodyPrincipal = celestialBodiesInformationMap.get("mars");
-        float innerRadiusKuiper = referenceBodyKuiper.getSemiMajorAxis();
-        float outerRadiusKuiper = referenceBodyKuiper.getSemiMajorAxis() + 200;
+        float innerRadiusKuiper = referenceBodyKuiper.getSemiMajorAxis() + 100;
+        float outerRadiusKuiper = referenceBodyKuiper.getSemiMajorAxis() + 1_000;
 
         float innerRaduisPrincipal = referenceBodyPrincipal.getSemiMajorAxis() + 500;
         float outerRadiusPrincipal = referenceBodyPrincipal.getSemiMajorAxis() + 1_000;

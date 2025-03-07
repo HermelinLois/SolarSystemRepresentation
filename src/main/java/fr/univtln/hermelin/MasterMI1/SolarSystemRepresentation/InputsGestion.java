@@ -125,8 +125,7 @@ public class InputsGestion {
         if (!rotating && !freecamera) {
             updateCameraPosition();
         }
-        if (switchCam) {
-            System.out.println("switching camera");
+        if (switchCam) { 
             app.getFlyByCamera().setEnabled(!freecamera);
             app.getFlyByCamera().setMoveSpeed(1000);
 
