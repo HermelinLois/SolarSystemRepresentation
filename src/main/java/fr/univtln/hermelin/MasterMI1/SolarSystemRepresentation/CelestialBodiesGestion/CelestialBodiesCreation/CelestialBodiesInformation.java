@@ -38,7 +38,7 @@ public class CelestialBodiesInformation {
         if (bodyType.equals("sun")) {
             this.radius = radius / 30_000f;
         } else if (name.equals("deimos") || name.equals("phobos")) {
-            this.radius = radius;
+            this.radius = radius/100;
         } else {
             this.radius = radius / 15_000f;
         }

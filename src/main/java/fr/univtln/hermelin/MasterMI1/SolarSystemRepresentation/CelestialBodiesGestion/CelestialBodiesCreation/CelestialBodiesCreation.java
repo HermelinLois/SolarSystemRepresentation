@@ -64,7 +64,7 @@ public class CelestialBodiesCreation {
             celestialBodyMat.setColor("Ambient", ColorRGBA.Gray);
             celestialBodyMat.setColor("Diffuse", ColorRGBA.White);
             celestialBodyMat.setFloat("Shininess", 13f);
-            celestialBodyMat.setColor("Specular", ColorRGBA.White.mult(0.5f));
+            celestialBodyMat.setColor("Specular", ColorRGBA.White.mult(0.01f));
             celestialBodyMat.setBoolean("UseMaterialColors", true);
             celestialBodyMat.setTexture("DiffuseMap", celestialBodyTexture);
 
